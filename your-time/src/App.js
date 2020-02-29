@@ -1,26 +1,19 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Redirect,
-  Switch
-} from "react-router-dom";
-
-import Users from "./pages/Users";
-import NewPlace from "./pages/NewPlace";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Nav from "./components/Nav"
 
 const App = () => {
   return (
     <Router>
-      <Switch>
-        <Route path="/" exact>
-          <Users />
-        </Route>
-        <Route path="/places/new" exact>
-          <NewPlace />
-        </Route>
-        <Redirect to="/" />
-      </Switch>
+      <div className="App">
+        <Nav />
+        <Switch>
+          <Route path="/" exact />
+          <Route path="/createTimeTable" />
+          <Route path="/notes" />
+          <Route path="/about" />
+        </Switch>
+      </div>
     </Router>
   );
 };
