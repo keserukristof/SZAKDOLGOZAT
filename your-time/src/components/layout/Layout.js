@@ -1,17 +1,22 @@
 import React from "react";
+
 import { makeStyles } from "@material-ui/core/styles";
+
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
+
 import TableChartIcon from "@material-ui/icons/TableChart";
 import NoteIcon from "@material-ui/icons/Note";
 import CodeIcon from "@material-ui/icons/Code";
-import ListItemLink from "./ListItemLink";
+
 import PortraitIcon from "@material-ui/icons/Portrait";
 import HomeIcon from '@material-ui/icons/Home';
+
+import ListItemLink from "./ListItemLink";
 
 const drawerWidth = 200;
 
@@ -61,7 +66,7 @@ const Layout = props => {
         <List>
         <ListItemLink
             to="/"
-            primary="Kezdőoldal"
+            primary="Kezdőlap"
             icon={<HomeIcon />}
           />
           <ListItemLink
