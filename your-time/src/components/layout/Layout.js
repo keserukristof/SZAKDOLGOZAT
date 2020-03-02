@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
@@ -11,6 +11,7 @@ import NoteIcon from "@material-ui/icons/Note";
 import CodeIcon from "@material-ui/icons/Code";
 import ListItemLink from "./ListItemLink";
 import PortraitIcon from "@material-ui/icons/Portrait";
+import HomeIcon from '@material-ui/icons/Home';
 
 const drawerWidth = 200;
 
@@ -36,7 +37,7 @@ const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar
 }));
 
-const Nav = () => {
+const Layout = props => {
   const classes = useStyles();
 
   return (
@@ -58,6 +59,11 @@ const Nav = () => {
       >
         <div className={classes.toolbar} />
         <List>
+        <ListItemLink
+            to="/"
+            primary="Kezdőoldal"
+            icon={<HomeIcon />}
+          />
           <ListItemLink
             to="/time-table"
             primary="Órarend"
@@ -78,10 +84,10 @@ const Nav = () => {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        
+          {props.children}
       </main>
     </div>
   );
 };
 
-export default Nav;
+export default Layout;
