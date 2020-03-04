@@ -10,6 +10,9 @@ import {
 import Layout from "./components/layout/Layout";
 import AboutTheProgram from "./pages/AboutTheProgram";
 import Home from "./pages/Home"
+import AboutMe from './pages/AboutMe'
+import TimeTable from './pages/TimeTable'
+import Notes from './pages/Notes'
 
 const App = () => {
   return (
@@ -17,10 +20,10 @@ const App = () => {
       <Layout>
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route path="/time-table" />
-          <Route path="/notes" />
+          <Route path="/time-table" component={TimeTable} />
+          <Route path="/notes" component={Notes}/>
           <Route path="/about-the-program" component={AboutTheProgram}/>
-          <Route path="/about-the-author" />
+          <Route path="/about-the-author" component={AboutMe}/>
           <Redirect to="/" />
         </Switch>
       </Layout>
