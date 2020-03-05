@@ -18,7 +18,7 @@ import HomeIcon from '@material-ui/icons/Home';
 
 import ListItemLink from "./ListItemLink";
 
-const drawerWidth = 200;
+const drawerWidth = 210;
 
 const useStyles = makeStyles(theme => ({
 

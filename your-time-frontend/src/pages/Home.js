@@ -7,7 +7,7 @@ import CostumCard from "../components/CostumCard";
 
 function Home() {
   return (
-    <Grid container spacing={6}>
+    <Grid container spacing={1}>
       <Grid item xs>
         <Link component={RouterLink} to="/time-table" color="inherit">
           <CostumCard
