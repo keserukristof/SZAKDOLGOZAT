@@ -10,10 +10,11 @@ const useStyles = makeStyles({
   root: {
     width: 520,
     marginBottom: 60,
-    marginLeft: 50
+    marginLeft: 50,
+    marginTop: 20
   },
   media: {
-    height: 250,
+    height: 250
   },
 });
 

@@ -1,8 +1,9 @@
 import React from "react";
+import TimeTableComponent from "../components/time-table/TimeTableComponent"
 
 const TimeTable = () => {
   return (
-    <h1>TIME TABLE</h1>
+    <TimeTableComponent/>
   );
 };
 
