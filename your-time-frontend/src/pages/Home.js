@@ -12,9 +12,9 @@ function Home() {
         <Link component={RouterLink} to="/time-table" color="inherit">
           <CostumCard
             image={require("../images/time_table.jpg")}
-            hover="Órarend tervező"
-            title="Órarend tervező"
-            description="Nézd meg bármikor az órarended és adj hozzá foglalkozásokat."
+            hover="Timetable planner"
+            title="Timetable planner"
+            description="Check out your time table anytime and add activities."
           />
         </Link>
       </Grid>
@@ -22,9 +22,9 @@ function Home() {
         <Link component={RouterLink} to="/notes" color="inherit">
           <CostumCard
             image={require("../images/notes.jpg")}
-            hover="Cetlik"
-            title="Cetlik"
-            description="Jegyezd fel a teendőidet, hogy soha ne felejts el semmit."
+            hover="Notes"
+            title="Notes"
+            description="Make a note of your to-do list so you never forget anything."
           />
         </Link>
       </Grid>
@@ -32,9 +32,9 @@ function Home() {
         <Link component={RouterLink} to="/about-the-program" color="inherit">
           <CostumCard
             image={require("../images/code.jpg")}
-            hover="A programról"
-            title="A programról"
-            description="Nézd meg a program GitHub oldalát."
+            hover="About the program"
+            title="About the program"
+            description="Learn more about the program."
           />
         </Link>
       </Grid>
@@ -42,9 +42,9 @@ function Home() {
         <Link component={RouterLink} to="/about-the-author">
           <CostumCard
             image={require("../images/myself.jpg")}
-            hover="A készítőről"
-            title="A készítőről"
-            description="Tudj meg többet a készítőről."
+            hover="About the author"
+            title="About the author"
+            description="Learn more about the author."
           />
         </Link>
       </Grid>

@@ -12,6 +12,7 @@ const AboutMe = () => {
           image={require("../images/me.jpg")}
           hover="A készítő"
           title="A készítő"
+<<<<<<< HEAD
           description="Keserű Kristóf vagyok, harmadéves DE IK PTI hallgató. Ezt az alkalmazás a szakdolgozati projectem. Az alkalmazást Dr. Kuki Attila mentorálásával készítettem el"
         />
       </Grid>

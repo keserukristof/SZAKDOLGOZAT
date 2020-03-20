@@ -18,7 +18,7 @@ import HomeIcon from '@material-ui/icons/Home';
 
 import ListItemLink from "./ListItemLink";
 
-const drawerWidth = 210;
+const drawerWidth = 250;
 
 const useStyles = makeStyles(theme => ({
 
@@ -66,23 +66,23 @@ const Layout = props => {
         <List>
         <ListItemLink
             to="/"
-            primary="Kezdőlap"
+            primary="Home page"
             icon={<HomeIcon />}
           />
           <ListItemLink
             to="/time-table"
-            primary="Órarend"
+            primary="Timetable planner"
             icon={<TableChartIcon />}
           />
           <ListItemLink to="/notes" primary="Cetlik" icon={<NoteIcon />} />
           <ListItemLink
             to="/about-the-program"
-            primary="A programról"
+            primary="About the program"
             icon={<CodeIcon />}
           />
           <ListItemLink
             to="/about-the-author"
-            primary="A készítőről"
+            primary="About the author"
             icon={<PortraitIcon />}
           />
         </List>

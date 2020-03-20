@@ -1,41 +1,39 @@
 import React from "react";
 
 import { Grid } from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 
 const AboutTheProgram = () => {
   return (
     <Grid container spacing={5}>
       <Grid item xs>
-        <Typography component="div">
           <Box textAlign="center" fontWeight={250} fontSize={40} m={1}>
-            A programról
+            About the program
           </Box>
           <Box textAlign="left" m={1}>
-            Harmadéves DI IK PTI hallgatóként elérkeztem tanulmányaim azon szakaszába
-            ahol szakdolgozati témát kellett választanom. A hosszas listát áttekintve
-            Dr. Kuki Attila Tanárúr által meghidetett "Kliens-szerver architektúrájú (webes) alkalmazásfejlesztés"
-            téma tűnt számomra a legideálisabbnak.
+            As a third year DE IK PTI student I entered the phase of my studies
+            where I had to choose a thesis topic. After reviewing the long list,
+            the topic "Client Server Architecture (Web) Application Development"
+            by Dr. Attila Kuki seemed to me the most ideal.
           </Box>
           <Box textAlign="left" m={1}>
-            Ez a webalkalmazás lehetőséget nyújt általános -és középiskolás diákok számára
-            ,hogy egy helyen elérjék az órarendjüket, szerkeszthesség azt illetve iskola
-            utáni foglalkozásokat is hozzáadjanak. 
+            This web application gives elementary and high school students the
+            ability to access their timetable, edit it, and add after-school
+            activities in one place.
           </Box>
           <Box textAlign="left" m={1}>
-            A "Cetlik" funkció használatával a diákok "feladatokat", "megjegyzéseket" tűzhetnek fel
-            maguknak és miután a "cetli" már nem aktuális eltávolíthatják azt.
+            Using the "Notes" feature, students can create tasks, notes, and
+            after the notes are not actual, they can be removed.
           </Box>
           <Box textAlign="left" m={1}>
-            Sok időt fordítottam arra, hogy megtaláljam azokat a moder webtechnológiákat amik
-            segítségével könnyedén megvalósíthatom azokat a célkitűzéseket amiket elterveztem a
-            projekt tervezési szakaszában. Kliens oldalon HTML5, CSS3, JavaScript technológiákat
-            használtam, illetve segítségül hívtam a React nevű JavaScript libraryt, továbbá a
-            weblap kinézetéért felelős Material UI-t. Szerver oldalon a NodeJS, illetve adatbázis oldalon
-            MongoDB technológiát használok. A MongoDB-t az Express nevű frameworkkel használtam.
+            I spent a lot of time finding modern web technologies that I could
+            easily implement the goals I set out during the project design
+            phase. On the client page I used HTML5, CSS3, JavaScript
+            technologies with React. The Material UI is responsible for the
+            appearance of the web page. I use NodeJS on the server side and
+            MongoDB technology on the database side. I used MongoDB with a
+            framework called Express.
           </Box>
-        </Typography>
       </Grid>
     </Grid>
   );
