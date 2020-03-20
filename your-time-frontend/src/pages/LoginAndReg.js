@@ -7,10 +7,14 @@ function LoginAndReg() {
     <div>
       <Grid container spacing={2}>
         <Grid item xs>
-          <Paper>ASD</Paper>
+          <Paper>
+
+          </Paper>
         </Grid>
         <Grid item xs>
-          <Paper>DSA</Paper>
+          <Paper>
+            
+          </Paper>
         </Grid>
       </Grid>
     </div>
