@@ -1,10 +1,9 @@
 import React from "react";
+import NotesComponent from "../components/notes/NotesComponent"
 
 const Notes = () => {
   return (
-    <div>
-      <h1>NOTES</h1>
-    </div>
+      <NotesComponent/>
   );
 };
 
