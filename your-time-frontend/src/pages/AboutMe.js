@@ -10,22 +10,22 @@ const AboutMe = () => {
       <Grid item xs>
         <CostumCard
           image={require("../images/me.jpg")}
-          hover="A készítő"
-          title="A készítő"
-          description="Keserű Kristóf vagyok, harmadéves DE IK PTI hallgató. Ezt az alkalmazás a szakdolgozati projectem. Az alkalmazást Dr. Kuki Attila mentorálásával készítettem el"
+          hover="The author"
+          title="The author"
+          description="My name is Kristóf Keserű, third year DE IK PTI student. This is my thesis project. 
+          The application made with the help of Dr. Kuki Attila."
         />
       </Grid>
       <Grid item xs>
         <Typography component="div">
           <Box textAlign="center" fontWeight={250} fontSize={40} m={1}>
-            Magamról
+            About me
           </Box>
           <Box textAlign="left" m={1}>
-            Keserű Kristóf vagyok. Püspökladányban nőttem fel és itt is
-            végeztem el a középiskolát és a Debreceni Egyetem Informatika
-            karán folytattam tanulmányaimat Programtervező informatikus szakon.
-            Leginkább a webfejlesztés vonz és jelenleg is próbálok naprakész
-            tudást szerezni napjaink népszerűbb webtechnogiái terén.
+            I'm Kristóf Keserű. I grow up in Püspökladányban and here I finished high school
+            then I continue my studies at the University of Debrecen.I learn Computer Science in here. 
+            What attracts me most is web development. 
+            I am currently trying to keep up to date with today's most popular web technologies.
           </Box>
         </Typography>
       </Grid>

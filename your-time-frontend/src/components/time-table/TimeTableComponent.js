@@ -17,7 +17,7 @@ import {
   AppointmentForm,
   AppointmentTooltip,
   ConfirmationDialog,
-  AllDayPanel
+  AllDayPanel,
 } from "@devexpress/dx-react-scheduler-material-ui";
 
 import { appointments } from "../../data/appointments";

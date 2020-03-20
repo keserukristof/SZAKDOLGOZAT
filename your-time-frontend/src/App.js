@@ -13,6 +13,7 @@ import Home from "./pages/Home"
 import AboutMe from './pages/AboutMe'
 import TimeTable from './pages/TimeTable'
 import Notes from './pages/Notes'
+import LoginAndReg from "./pages/LoginAndReg";
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
           <Route path="/notes" component={Notes}/>
           <Route path="/about-the-program" component={AboutTheProgram}/>
           <Route path="/about-the-author" component={AboutMe}/>
+          <Route path="/login-registration" component={LoginAndReg}/>
           <Redirect to="/" />
         </Switch>
       </Layout>
