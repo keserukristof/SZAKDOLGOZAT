@@ -14,10 +14,6 @@ const AboutMe = () => {
           title="The author"
           description="My name is Kristóf Keserű, third year DE IK PTI student. This is my thesis project. 
           The application made with the help of Dr. Kuki Attila."
-          hover="A készítő"
-          title="A készítő"
-          description="Keserű Kristóf vagyok, harmadéves DE IK PTI hallgató. Ezt az alkalmazás a szakdolgozati projectem. Az alkalmazást Dr. Kuki Attila mentorálásával készítettem el"
-
         />
       </Grid>
       <Grid item xs>

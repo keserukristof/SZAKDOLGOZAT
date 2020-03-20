@@ -67,7 +67,6 @@ class TimeTableComponent extends React.PureComponent {
           <IntegratedEditing />
           <WeekView startDayHour={6} endDayHour={22} />
           <MonthView/>
-
           <Toolbar />
           <TodayButton />
           <DateNavigator />

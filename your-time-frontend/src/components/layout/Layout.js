@@ -64,7 +64,7 @@ const Layout = props => {
       >
         <div className={classes.toolbar} />
         <List>
-        <ListItemLink
+          <ListItemLink
             to="/"
             primary="Home page"
             icon={<HomeIcon />}
@@ -74,7 +74,11 @@ const Layout = props => {
             primary="Timetable planner"
             icon={<TableChartIcon />}
           />
-          <ListItemLink to="/notes" primary="Cetlik" icon={<NoteIcon />} />
+          <ListItemLink
+            to="/notes"
+            primary="Notes"
+            icon={<NoteIcon />}
+          />
           <ListItemLink
             to="/about-the-program"
             primary="About the program"
@@ -89,7 +93,7 @@ const Layout = props => {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-          {props.children}
+        {props.children}
       </main>
     </div>
   );
