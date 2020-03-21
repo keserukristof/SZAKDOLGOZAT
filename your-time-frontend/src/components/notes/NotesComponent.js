@@ -1,81 +1,68 @@
-import 'date-fns';
-import React from 'react';
+import React from "react";
+import { useForm } from "react-hook-form";
 import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import DateFnsUtils from '@date-io/date-fns';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
-import TextField from "@material-ui/core/TextField"
+import Input from "@material-ui/core/Input";
+import Button from "@material-ui/core/Button";
+import { MuiThemeProvider, Grid } from "@material-ui/core";
 
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1,
+    '& > *': {
+      margin: theme.spacing(2),
+    },
   },
   item: {
     marginTop: 30,
-    marginBottom: 70
-  }
+    marginBottom: 30,
+  },
 }));
 
-export default function NotesComponent() {
-  // The first commit of Material-UI
-  const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
+const NotesComponent = () => {
+  const { register, handleSubmit } = useForm();
   const classes = useStyles();
 
-  
-  const handleDateChange = date => {
-    setSelectedDate(date);
+  const onSubmit = (data) => {
+    console.log(data);
   };
 
   return (
-    <MuiPickersUtilsProvider utils={DateFnsUtils} className={classes.root}>
-      <Grid container justify="space-around">
-        <h1 id="main-text">Add note!</h1>
+    <MuiThemeProvider>
+      <Grid container justify="space-around" className={classes.root}>
+        <Grid item>
+          <h1 className={classes.item}>Add note!</h1>
+        </Grid>
       </Grid>
-      <Grid container justify="space-evenly">
-          <TextField
-            id="input-name"
-            label="Name"
-            type="text"
-            className={classes.item}
-          />
-          <TextField
-            id="input-content"
-            label="Content"
-            type="text"
-            multiline
-            rowsMax="3"
-            className={classes.item}
-          />
-      </Grid>
-      <Grid container justify="space-evenly" >
-        <KeyboardDatePicker
-          margin="normal"
-          id="date-picker-dialog"
-          format="yyyy/MM/dd"
-          value={selectedDate}
-          onChange={handleDateChange}
-          KeyboardButtonProps={{
-            'aria-label': 'change date',
-          }}
-          className={classes.item}
-        />
-
-        <KeyboardTimePicker
-          margin="normal"
-          id="time-picker"
-          value={selectedDate}
-          onChange={handleDateChange}
-          KeyboardButtonProps={{
-            'aria-label': 'change time',
-          }}
-          className={classes.item}
-        />
-      </Grid>
-    </MuiPickersUtilsProvider>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Grid container justify="space-around" className={classes.root}>
+          <Grid item className={classes.item}>
+            <Input
+              name="name"
+              inputRef={register}
+              placeholder="Name"
+            />
+          </Grid>
+          <Grid item className={classes.item}>
+            <Input
+              name="content"
+              inputRef={register}
+              placeholder="Content"
+              multiline
+            />
+          </Grid>
+          <Grid item className={classes.item}>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+            >
+              Submit
+            </Button>
+          </Grid>
+        </Grid>
+      </form>
+    </MuiThemeProvider>
   );
-}
+};
+
+export default NotesComponent;
