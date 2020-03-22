@@ -1,7 +1,7 @@
 import React from "react";
 
 import {
-  HashRouter as Router,
+  BrowserRouter as Router,
   Switch,
   Route,
   Redirect
@@ -17,7 +17,7 @@ import LoginAndReg from "./pages/LoginAndReg";
 
 const App = () => {
   return (
-    <Router>
+    <Router basename="your-time-frontend">
       <Layout>
         <Switch>
           <Route exact path="/" component={Home} />
