@@ -39,7 +39,7 @@ function Home() {
         </Link>
       </Grid>
       <Grid item xs>
-        <Link component={RouterLink} to="/about-the-author">
+        <Link component={RouterLink} to="/about-the-author" color="inherit">
           <CostumCard
             image={require("../images/myself.jpg")}
             hover="About the author"

@@ -26,7 +26,7 @@ const Note = ({ note, toggleComplete, removeNote }) => {
         <Typography
           variant="body1"
           style={{
-            textDecoration: note.completed ? "line-through" : null
+            color: note.completed ? "green" : "black"
           }}
         >
           {note.task}

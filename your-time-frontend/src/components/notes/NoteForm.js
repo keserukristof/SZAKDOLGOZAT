@@ -49,6 +49,7 @@ const NoteForm = ({addNote}) => {
               onChange={handleTaskInputChange}
               name="task"
               placeholder="Task"
+              multiline
             />
           </Grid>
           <Grid item className={classes.item}>
