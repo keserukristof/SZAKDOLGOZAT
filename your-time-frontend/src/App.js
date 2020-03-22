@@ -17,7 +17,7 @@ import LoginAndReg from "./pages/LoginAndReg";
 
 const App = () => {
   return (
-    <Router basename="your-time-frontend">
+    <Router>
       <Layout>
         <Switch>
           <Route exact path="/" component={Home} />
