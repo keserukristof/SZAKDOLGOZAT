@@ -34,13 +34,14 @@ const NoteForm = ({addNote}) => {
   const handleSubmit = e => {
     e.preventDefault();
     if (note.task.trim()) {
-      addNote({ ...note, id: uuid() })
+      addNote({ ...note, id: uuid() });
+      setNote({ ...note, task: "" });
     }
   }
 
   return (
     <MuiThemeProvider>
-      <form>
+      <form onSubmit={handleSubmit}>
         <Grid container justify="space-around" className={classes.root}>
           <Grid item className={classes.item}>
             <Input
