@@ -15,6 +15,7 @@ import TimeTable from './pages/TimeTable'
 import Notes from './pages/Notes'
 import LoginAndReg from "./pages/LoginAndReg";
 
+
 const App = () => {
   return (
     <Router>
