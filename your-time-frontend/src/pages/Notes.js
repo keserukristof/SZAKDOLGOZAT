@@ -2,8 +2,16 @@ import React, { useState } from "react";
 import NoteForm from "../components/notes/NoteForm";
 import { MuiThemeProvider, Grid } from "@material-ui/core";
 import NoteList from "../components/notes/NoteList";
+import { useSpring, animated } from "react-spring";
+
 
 const Notes = () => {
+  const animation = useSpring({
+    from: { marginLeft: -1000 },
+    to: { marginLeft: 0 },
+    config: { duration: 1000 }
+  });
+  
   const [notes, setNotes] = useState([]);
 
   const addNote = note => {
@@ -29,7 +37,7 @@ const Notes = () => {
   };
 
   return (
-    <div>
+    <animated.div style={animation}>
       <MuiThemeProvider>
         <Grid container justify="space-around">
           <Grid item>
@@ -43,7 +51,7 @@ const Notes = () => {
         toggleComplete={toggleComplete}
         removeNote={removeNote}
       />
-    </div>
+    </animated.div>
   );
 };
 

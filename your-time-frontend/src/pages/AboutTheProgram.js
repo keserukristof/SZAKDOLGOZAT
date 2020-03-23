@@ -2,11 +2,19 @@ import React from "react";
 
 import { Grid } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
+import { useSpring, animated } from "react-spring";
 
 const AboutTheProgram = () => {
+  const animation = useSpring({
+    from: { marginLeft: -1000 },
+    to: { marginLeft: 0 },
+    config: { duration: 1000 }
+  });
+
   return (
-    <Grid container spacing={5}>
-      <Grid item xs>
+    <animated.div style={animation}>
+      <Grid container spacing={5}>
+        <Grid item xs>
           <Box textAlign="center" fontWeight={250} fontSize={40} m={1}>
             About the program
           </Box>
@@ -34,8 +42,9 @@ const AboutTheProgram = () => {
             MongoDB technology on the database side. I used MongoDB with a
             framework called Express.
           </Box>
+        </Grid>
       </Grid>
-    </Grid>
+    </animated.div>
   );
 };
 
