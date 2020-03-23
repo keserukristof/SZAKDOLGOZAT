@@ -1,15 +1,15 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "4e1a32b8292bfc2e833d645e70f8c9a4",
+    "revision": "131f870c70afc6dda88fecfe5ca6cd6d",
     "url": "/SZAKDOLGOZAT/index.html"
   },
   {
-    "revision": "e846b35a10706c85800a",
-    "url": "/SZAKDOLGOZAT/static/js/2.5b2e484e.chunk.js"
+    "revision": "d004ce970f811b0b1603",
+    "url": "/SZAKDOLGOZAT/static/js/2.7f356f9c.chunk.js"
   },
   {
-    "revision": "a702d6ea6706d217eab9",
-    "url": "/SZAKDOLGOZAT/static/js/main.1ca19554.chunk.js"
+    "revision": "4d7b6c4954db17ac4cbd",
+    "url": "/SZAKDOLGOZAT/static/js/main.448f9338.chunk.js"
   },
   {
     "revision": "5df8e5ddbf77d5a0b0f2",
@@ -24,8 +24,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/SZAKDOLGOZAT/static/media/myself.c6da6aef.jpg"
   },
   {
-    "revision": "bdae1fc7f28350a0f684e85bf873d139",
-    "url": "/SZAKDOLGOZAT/static/media/notes.bdae1fc7.jpg"
+    "revision": "7edb6a0213067102328adcea08124a16",
+    "url": "/SZAKDOLGOZAT/static/media/notes.7edb6a02.jpg"
   },
   {
     "revision": "5752e11d0fa9496ff50876cde142f4c6",
