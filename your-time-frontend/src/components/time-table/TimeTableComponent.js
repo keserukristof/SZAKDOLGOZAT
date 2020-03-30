@@ -1,32 +1,29 @@
+/* eslint-disable react/destructuring-assignment */
 import * as React from "react";
 import Paper from "@material-ui/core/Paper";
-import {
-  ViewState,
-  EditingState,
-  IntegratedEditing
-} from "@devexpress/dx-react-scheduler";
+import { ViewState, EditingState } from "@devexpress/dx-react-scheduler";
 import {
   Scheduler,
   WeekView,
+  Appointments,
+  AppointmentForm,
+  AppointmentTooltip,
+  DragDropProvider,
+  EditRecurrenceMenu,
+  AllDayPanel,
   MonthView,
   Toolbar,
   TodayButton,
   DateNavigator,
   ViewSwitcher,
-  Appointments,
-  AppointmentForm,
-  EditRecurrenceMenu,
-  AppointmentTooltip,
-  ConfirmationDialog,
-  AllDayPanel,
-  DragDropProvider
+  ConfirmationDialog
 } from "@devexpress/dx-react-scheduler-material-ui";
 
-import { appointments } from "../../data/appointments";
+import { recurrenceAppointments } from "../../data/recurrenceAppointments";
 
 const dragDisableIds = new Set([]);
-const allowDrag = ({ id }) => !dragDisableIds.has(id);
 
+const allowDrag = ({ id }) => !dragDisableIds.has(id);
 const appointmentComponent = props => {
   if (allowDrag(props.data)) {
     return <Appointments.Appointment {...props} />;
@@ -44,11 +41,32 @@ class TimeTableComponent extends React.PureComponent {
     super(props);
 
     this.state = {
-      data: appointments,
-      currentDate: new Date()
+      data: recurrenceAppointments,
+      currentDate: new Date(),
+
+      addedAppointment: {},
+      appointmentChanges: {},
+      editingAppointmentId: undefined
     };
 
-    this.commitChanges = this.commitChanges.bind(this);
+    this.onCommitChanges = this.commitChanges.bind(this);
+    this.changeAddedAppointment = this.changeAddedAppointment.bind(this);
+    this.changeAppointmentChanges = this.changeAppointmentChanges.bind(this);
+    this.changeEditingAppointmentId = this.changeEditingAppointmentId.bind(
+      this
+    );
+  }
+
+  changeAddedAppointment(addedAppointment) {
+    this.setState({ addedAppointment });
+  }
+
+  changeAppointmentChanges(appointmentChanges) {
+    this.setState({ appointmentChanges });
+  }
+
+  changeEditingAppointmentId(editingAppointmentId) {
+    this.setState({ editingAppointmentId });
   }
 
   commitChanges({ added, changed, deleted }) {
@@ -60,11 +78,11 @@ class TimeTableComponent extends React.PureComponent {
         data = [...data, { id: startingAddedId, ...added }];
       }
       if (changed) {
-        data = data.map(appointment => (
+        data = data.map(appointment =>
           changed[appointment.id]
             ? { ...appointment, ...changed[appointment.id] }
             : appointment
-        ));
+        );
       }
       if (deleted !== undefined) {
         data = data.filter(appointment => appointment.id !== deleted);
@@ -74,17 +92,32 @@ class TimeTableComponent extends React.PureComponent {
   }
 
   render() {
-    const { data, currentDate } = this.state;
+    const {
+      data,
+      currentDate,
+      addedAppointment,
+      appointmentChanges,
+      editingAppointmentId
+    } = this.state;
 
     return (
       <Paper>
-        <Scheduler data={data} height={850}>
-          <ViewState deafultCurrentDate={currentDate} />
-          <EditingState onCommitChanges={this.commitChanges} />
-          <IntegratedEditing />
-          <EditRecurrenceMenu />
-          <WeekView startDayHour={6} endDayHour={22} />
+        <Scheduler data={data} height={750}>
+          <ViewState defaultCurrentDate={currentDate} />
+          <EditingState
+            onCommitChanges={this.onCommitChanges}
+            addedAppointment={addedAppointment}
+            onAddedAppointmentChange={this.changeAddedAppointment}
+            appointmentChanges={appointmentChanges}
+            onAppointmentChangesChange={this.changeAppointmentChanges}
+            editingAppointmentId={editingAppointmentId}
+            onEditingAppointmentIdChange={this.changeEditingAppointmentId}
+          />
+          <WeekView startDayHour={7} endDayHour={20} />
           <MonthView />
+          <AllDayPanel />
+          <EditRecurrenceMenu />
+          <ConfirmationDialog />
           <Toolbar />
           <TodayButton />
           <DateNavigator />
@@ -93,7 +126,6 @@ class TimeTableComponent extends React.PureComponent {
           <Appointments appointmentComponent={appointmentComponent} />
           <AppointmentTooltip showOpenButton showDeleteButton />
           <AppointmentForm />
-          <AllDayPanel />
           <DragDropProvider allowDrag={allowDrag} />
         </Scheduler>
       </Paper>
