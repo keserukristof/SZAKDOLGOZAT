@@ -1,15 +1,15 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "131f870c70afc6dda88fecfe5ca6cd6d",
+    "revision": "59af872f1f41ea81101660215cfd4e41",
     "url": "/SZAKDOLGOZAT/index.html"
   },
   {
-    "revision": "d004ce970f811b0b1603",
-    "url": "/SZAKDOLGOZAT/static/js/2.7f356f9c.chunk.js"
+    "revision": "d6f0597bd9a92c296187",
+    "url": "/SZAKDOLGOZAT/static/js/2.03b98d43.chunk.js"
   },
   {
-    "revision": "4d7b6c4954db17ac4cbd",
-    "url": "/SZAKDOLGOZAT/static/js/main.448f9338.chunk.js"
+    "revision": "7d6417aaf01009244afb",
+    "url": "/SZAKDOLGOZAT/static/js/main.2b57858f.chunk.js"
   },
   {
     "revision": "5df8e5ddbf77d5a0b0f2",
@@ -18,6 +18,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "a23a3b979c90195beaf17e0ed1bf8d53",
     "url": "/SZAKDOLGOZAT/static/media/code.a23a3b97.jpg"
+  },
+  {
+    "revision": "13af5cc99daf63afec47e28a01d18b12",
+    "url": "/SZAKDOLGOZAT/static/media/github.13af5cc9.png"
   },
   {
     "revision": "c6da6aef469e8d603606006528ed1dea",
