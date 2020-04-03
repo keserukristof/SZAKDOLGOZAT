@@ -39,6 +39,7 @@ const NoteForm = ({addNote}) => {
     }
   }
 
+
   return (
     <MuiThemeProvider>
       <form onSubmit={handleSubmit}>
