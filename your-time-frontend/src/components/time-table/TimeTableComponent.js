@@ -68,14 +68,17 @@ class TimeTableComponent extends React.PureComponent {
 
   changeAddedAppointment(addedAppointment) {
     this.setState({ addedAppointment });
+    console.log(addedAppointment)
   }
 
   changeAppointmentChanges(appointmentChanges) {
     this.setState({ appointmentChanges });
+    console.log(appointmentChanges)
   }
 
   changeEditingAppointmentId(editingAppointmentId) {
     this.setState({ editingAppointmentId });
+    console.log(editingAppointmentId)
   }
 
   commitChanges({ added, changed, deleted }) {

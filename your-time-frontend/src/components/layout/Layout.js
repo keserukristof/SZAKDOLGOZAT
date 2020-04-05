@@ -83,6 +83,16 @@ function ResponsiveDrawer(props) {
           primary="About the author"
           icon={<PortraitIcon />}
         />
+        <ListItemLink
+          to="/login"
+          primary="Login"
+          icon={<PortraitIcon />}
+        />
+        <ListItemLink 
+          to="sign-up"
+          primary="Sign up"
+          icon={<PortraitIcon />}
+        />
       </List>
     </div>
   );
