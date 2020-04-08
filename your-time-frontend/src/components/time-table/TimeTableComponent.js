@@ -36,6 +36,8 @@ const appointmentComponent = (props) => {
 };
 
 class TimeTableComponent extends React.PureComponent {
+  _isMounted = false;
+
   constructor(props) {
     super(props);
 
@@ -57,6 +59,7 @@ class TimeTableComponent extends React.PureComponent {
   }
 
   componentDidMount() {
+    this._isMounted = true;
     fetch('/api/appointments')
       .then((res) => res.json())
       .then((appointments) =>
@@ -66,19 +69,20 @@ class TimeTableComponent extends React.PureComponent {
       );
   }
 
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
   changeAddedAppointment(addedAppointment) {
     this.setState({ addedAppointment });
-    console.log(addedAppointment)
   }
 
   changeAppointmentChanges(appointmentChanges) {
     this.setState({ appointmentChanges });
-    console.log(appointmentChanges)
   }
 
   changeEditingAppointmentId(editingAppointmentId) {
     this.setState({ editingAppointmentId });
-    console.log(editingAppointmentId)
   }
 
   commitChanges({ added, changed, deleted }) {
@@ -99,6 +103,18 @@ class TimeTableComponent extends React.PureComponent {
       if (deleted !== undefined) {
         data = data.filter((appointment) => appointment.id !== deleted);
       }
+      fetch('http://localhost:5000/api/appointments', {
+        method: "POST",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data[data.length - 1])
+      })
+      .then(result => {
+        console.log(result)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+      console.log(data)
       return { data };
     });
   }

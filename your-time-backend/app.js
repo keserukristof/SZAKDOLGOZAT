@@ -21,6 +21,24 @@ connection.once('open', function callback () {
   console.log("Successful connection!");
 });
 
+const appointments = require('./routes/appointments')
+
+app.use('/api/appointments', appointments)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const port = 5000;
 
 app.listen(port, () => {
