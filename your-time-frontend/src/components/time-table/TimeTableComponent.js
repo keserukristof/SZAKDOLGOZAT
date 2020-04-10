@@ -19,7 +19,6 @@ import {
   ConfirmationDialog,
 } from '@devexpress/dx-react-scheduler-material-ui';
 
-
 const dragDisableIds = new Set([]);
 
 const allowDrag = ({ id }) => !dragDisableIds.has(id);
@@ -62,11 +61,17 @@ class TimeTableComponent extends React.PureComponent {
     this._isMounted = true;
     fetch('/api/appointments')
       .then((res) => res.json())
-      .then((appointments) =>
-        this.setState({ data: appointments }, () =>
-          console.log('Appointments fetched', appointments)
-        )
-      );
+      .then((appointments) => {
+        if (appointments) {
+          for (const appointment of appointments) {
+            appointment.startDate = new Date(appointment.startDate);
+            appointment.endDate = new Date(appointment.endDate);
+          }
+        } 
+        this.setState({ data: appointments }, () => {
+          console.log('Appointments fetched', appointments);
+        });
+      });
   }
 
   componentWillUnmount() {
@@ -92,6 +97,18 @@ class TimeTableComponent extends React.PureComponent {
         const startingAddedId =
           data.length > 0 ? data[data.length - 1].id + 1 : 0;
         data = [...data, { id: startingAddedId, ...added }];
+        console.log(data)
+        fetch('http://localhost:5000/api/appointments', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data[data.length - 1]),
+        })
+          .then((result) => {
+            console.log(result);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       }
       if (changed) {
         data = data.map((appointment) =>
@@ -99,22 +116,24 @@ class TimeTableComponent extends React.PureComponent {
             ? { ...appointment, ...changed[appointment.id] }
             : appointment
         );
+        console.log(data);
       }
       if (deleted !== undefined) {
-        data = data.filter((appointment) => appointment.id !== deleted);
+        let deletedId;
+        data = data.filter((appointment) => {
+          if (appointment.id === deleted) {
+            deletedId = appointment.id
+          }
+          return appointment.id !== deleted
+        });
+        fetch('http://localhost:5000/api/appointments/', {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json'},
+          body: JSON.stringify({id: deletedId})
+        })
+        .then(response => console.log(response))
+        .catch(err => console.log(err))
       }
-      fetch('http://localhost:5000/api/appointments', {
-        method: "POST",
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(data[data.length - 1])
-      })
-      .then(result => {
-        console.log(result)
-      })
-      .catch(err => {
-        console.log(err)
-      })
-      console.log(data)
       return { data };
     });
   }
