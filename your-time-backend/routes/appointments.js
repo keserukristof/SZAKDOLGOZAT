@@ -37,8 +37,20 @@ router.get('/', (req, res, next) => {
 });
 
 router.patch('/', (req, res, next) => {
-  let newObject = req.body.newObject;
-  Appointments.findOneAndUpdate(req.body._id, newObject)
+  Appointments.updateOne(
+    { id: req.body.id },
+    {
+      $set: {
+        _id: req.body._id,
+        title: req.body.title,
+        startDate: req.body.startDate,
+        endDate: req.body.endDate,
+        rRule: req.body.rRule,
+        exDate: req.body.exDate,
+        allDay: req.body.allDay,
+      },
+    }
+  )
     .exec()
     .then((result) => {
       res.json(result);

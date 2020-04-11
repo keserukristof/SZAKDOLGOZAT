@@ -67,7 +67,7 @@ class TimeTableComponent extends React.PureComponent {
             appointment.startDate = new Date(appointment.startDate);
             appointment.endDate = new Date(appointment.endDate);
           }
-        } 
+        }
         this.setState({ data: appointments }, () => {
           console.log('Appointments fetched', appointments);
         });
@@ -97,7 +97,6 @@ class TimeTableComponent extends React.PureComponent {
         const startingAddedId =
           data.length > 0 ? data[data.length - 1].id + 1 : 0;
         data = [...data, { id: startingAddedId, ...added }];
-        console.log(data)
         fetch('http://localhost:5000/api/appointments', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -111,28 +110,44 @@ class TimeTableComponent extends React.PureComponent {
           });
       }
       if (changed) {
-        data = data.map((appointment) =>
-          changed[appointment.id]
-            ? { ...appointment, ...changed[appointment.id] }
-            : appointment
-        );
-        console.log(data);
+        let chanhedAppointmentId;
+        data = data.map((appointment) => {
+          if (changed[appointment.id]) {
+            chanhedAppointmentId = appointment.id
+            return { ...appointment, ...changed[appointment.id] }
+          } else {
+            return appointment
+          }
+        });
+
+
+        fetch('http://localhost:5000/api/appointments', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data[chanhedAppointmentId]),
+        })
+          .then((result) => {
+            console.log(result);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       }
       if (deleted !== undefined) {
         let deletedId;
         data = data.filter((appointment) => {
           if (appointment.id === deleted) {
-            deletedId = appointment.id
+            deletedId = appointment.id;
           }
-          return appointment.id !== deleted
+          return appointment.id !== deleted;
         });
         fetch('http://localhost:5000/api/appointments/', {
           method: 'DELETE',
-          headers: { 'Content-Type': 'application/json'},
-          body: JSON.stringify({id: deletedId})
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: deletedId }),
         })
-        .then(response => console.log(response))
-        .catch(err => console.log(err))
+          .then((response) => console.log(response))
+          .catch((err) => console.log(err));
       }
       return { data };
     });
