@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
@@ -28,14 +28,15 @@ const NoteForm = ({addNote}) => {
   });
 
   const handleTaskInputChange = e => {
-    setNote({ ...note, task: e.target.value });
+    setNote({ ...note, task: e.target.value, id: uuid() });
   };
 
   const handleSubmit = e => {
     e.preventDefault();
     if (note.task.trim()) {
-      addNote({ ...note, id: uuid() });
+      addNote({ ...note });
       setNote({ ...note, task: "" });
+      console.log(note)
     }
   }
 

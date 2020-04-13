@@ -8,7 +8,7 @@ const NoteList = ({ notes, toggleComplete, removeNote }) => {
   return (
     <List>
       <Grid container spacing={4}>
-        {notes.map(note => (
+        {notes.map((note) => (
             <Grid item xs>
               <Note
                 key={note.id}

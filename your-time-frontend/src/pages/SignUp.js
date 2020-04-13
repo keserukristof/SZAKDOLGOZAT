@@ -74,7 +74,7 @@ const SignUp = () => {
         </Grid>
         <Grid container justify='space-around' className={classes.root}>
           <Grid item className={classes.item}>
-            <Button type='submit' variant='contained' color='primary'>
+            <Button onSubmit={onSubmit} type='submit' variant='contained' color='primary'>
               Submit
             </Button>
           </Grid>

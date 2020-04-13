@@ -22,9 +22,10 @@ connection.once('open', function callback () {
 });
 
 const appointments = require('./routes/appointments')
+const notes = require('./routes/notes')
 
 app.use('/api/appointments', appointments)
-
+app.use('/api/notes', notes)
 
 
 

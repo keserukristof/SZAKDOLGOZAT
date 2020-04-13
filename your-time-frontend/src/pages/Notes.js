@@ -1,26 +1,40 @@
-import React, { useState } from "react";
+import React, { Component } from 'react'
 import NoteForm from "../components/notes/NoteForm";
-import { MuiThemeProvider, Grid } from "@material-ui/core";
+import {Grid} from "@material-ui/core";
 import NoteList from "../components/notes/NoteList";
-import { useSpring, animated } from "react-spring";
 
 
-const Notes = () => {
-  const animation = useSpring({
-    from: { marginLeft: -1000 },
-    to: { marginLeft: 0 },
-    config: { duration: 1000 }
-  });
-  
-  const [notes, setNotes] = useState([]);
+export default class NotesClassBased extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      notes: []
+    }
+    this.addNote = this.addNote.bind(this)
+    this.toggleComplete = this.toggleComplete.bind(this)
+    this.removeNote = this.removeNote.bind(this)
+  }
 
-  const addNote = note => {
-    setNotes([note, ...notes]);
-  };
+  componentDidMount() {
+    fetch('/api/notes')
+      .then((res) => res.json())
+      .then((notes) => {
+        if (notes) {
+          for (const note of notes) {            
+            this.setState({notes: [ ...this.state.notes, note ]})
+          }
+        }
+      });
+  }
 
-  const toggleComplete = id => {
-    setNotes(
-      notes.map(note => {
+  addNote = note => {
+    this.setState({notes: [ ...this.state.notes, note ]})
+    console.log(this.state.notes)
+  }
+
+  toggleComplete = id => {
+    this.setState(
+      this.notes.map(note => {
         if (note.id === id) {
           return {
             ...note,
@@ -32,27 +46,25 @@ const Notes = () => {
     );
   };
 
-  const removeNote = id => {
-    setNotes(notes.filter(note => note.id !== id));
+  removeNote = id => {
+    this.setState(this.notes.filter(note => note.id !== id));
   };
 
-  return (
-    <animated.div style={animation}>
-      <MuiThemeProvider>
-        <Grid container justify="space-around">
-          <Grid item>
-            <h1>Add note!</h1>
+  render() {
+    return (
+      <div>
+          <Grid container justify="space-around">
+            <Grid item>
+              <h1>Add note!</h1>
+            </Grid>
           </Grid>
-        </Grid>
-      </MuiThemeProvider>
-      <NoteForm addNote={addNote} />
-      <NoteList
-        notes={notes}
-        toggleComplete={toggleComplete}
-        removeNote={removeNote}
-      />
-    </animated.div>
-  );
-};
-
-export default Notes;
+        <NoteForm addNote={this.addNote} />
+        <NoteList
+          notes={this.state.notes}
+          toggleComplete={this.toggleComplete}
+          removeNote={this.removeNote}
+        />
+      </div>
+    );
+  }
+}
