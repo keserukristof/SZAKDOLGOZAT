@@ -22,7 +22,8 @@ router.post('/', (req, res, next) => {
 });
 
 router.get('/', (req, res, next) => {
-  Notes.find()
+  const { query } = req;
+  Notes.find(query)
     .exec()
     .then((result) => {
       res.json(result);
@@ -51,7 +52,7 @@ router.patch('/', (req, res, next) => {
 });
 
 router.delete('/', (req, res, next) => {
-  Notes.deleteOne({ id: req.body.id })
+  Notes.deleteOne()
     .exec()
     .then((result) => {
       res.json(result);

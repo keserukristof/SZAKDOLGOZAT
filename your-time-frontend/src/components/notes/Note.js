@@ -7,6 +7,9 @@ import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from '@material-ui/core/styles';
 
+import axios from 'axios';
+
+
 
 const useStyles = makeStyles({
   root: {
@@ -24,6 +27,13 @@ const Note = ({ note, toggleComplete, removeNote }) => {
   };
 
   const handleRemoveClick = () => {
+    console.log(note)
+    const noteId = note.id
+    axios.delete("/api/notes", { noteId })
+    .then(res => {
+      console.log(res);
+      console.log(res.data);
+    })
     removeNote(note.id);
   };
 

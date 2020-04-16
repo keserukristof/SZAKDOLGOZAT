@@ -97,7 +97,7 @@ class TimeTableComponent extends React.PureComponent {
         const startingAddedId =
           data.length > 0 ? data[data.length - 1].id + 1 : 0;
         data = [...data, { id: startingAddedId, ...added }];
-        fetch('http://localhost:5000/api/appointments', {
+        fetch('/api/appointments', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data[data.length - 1]),
@@ -121,7 +121,7 @@ class TimeTableComponent extends React.PureComponent {
         });
 
 
-        fetch('http://localhost:5000/api/appointments', {
+        fetch('api/appointments', {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data[chanhedAppointmentId]),

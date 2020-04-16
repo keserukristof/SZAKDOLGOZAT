@@ -1,63 +1,73 @@
-import React, { Component } from 'react'
-import NoteForm from "../components/notes/NoteForm";
-import {Grid} from "@material-ui/core";
-import NoteList from "../components/notes/NoteList";
-
+import React, { Component } from 'react';
+import NoteForm from '../components/notes/NoteForm';
+import { Grid } from '@material-ui/core';
+import NoteList from '../components/notes/NoteList';
+import axios from 'axios';
 
 export default class NotesClassBased extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      notes: []
-    }
-    this.addNote = this.addNote.bind(this)
-    this.toggleComplete = this.toggleComplete.bind(this)
-    this.removeNote = this.removeNote.bind(this)
+      notes: [],
+    };
+    this.addNote = this.addNote.bind(this);
+    this.toggleComplete = this.toggleComplete.bind(this);
+    this.removeNote = this.removeNote.bind(this);
   }
 
   componentDidMount() {
-    fetch('/api/notes')
-      .then((res) => res.json())
-      .then((notes) => {
-        if (notes) {
-          for (const note of notes) {            
-            this.setState({notes: [ ...this.state.notes, note ]})
-          }
-        }
-      });
+    axios.get('/api/notes').then((res) => {
+      const notes = res.data;
+      this.setState({ notes });
+    });
   }
 
-  addNote = note => {
-    this.setState({notes: [ ...this.state.notes, note ]})
-    console.log(this.state.notes)
-  }
+  addNote = (note) => {
+    this.setState({ notes: [...this.state.notes, note] });
+    axios.post('/api/notes', note).then((res) => {
+      console.log(res);
+      console.log(res.data);
+    });
+  };
 
-  toggleComplete = id => {
-    this.setState(
-      this.notes.map(note => {
+  toggleComplete = (id) => {
+    let noteToSend;
+    this.setState({
+      notes: this.state.notes.map((note) => {
         if (note.id === id) {
+          noteToSend = note;
           return {
             ...note,
-            completed: !note.completed
+            completed: !note.completed,
           };
         }
         return note;
-      })
-    );
+      }),
+    });
+    noteToSend = { ...noteToSend, completed: !noteToSend.completed };
+    axios.patch('api/notes', noteToSend).then((res) => {
+      console.log(res);
+      console.log(res.data);
+    });
   };
 
-  removeNote = id => {
-    this.setState(this.notes.filter(note => note.id !== id));
+  removeNote = (id) => {
+    console.log(id);
+    this.setState({ notes: this.state.notes.filter((note) => note.id !== id) });
+    axios.delete('api/notes/', {params: {id: id}} ).then((res) => {
+      console.log(res);
+      console.log(res.data);
+    });
   };
 
   render() {
     return (
       <div>
-          <Grid container justify="space-around">
-            <Grid item>
-              <h1>Add note!</h1>
-            </Grid>
+        <Grid container justify='space-around'>
+          <Grid item>
+            <h1>Add note!</h1>
           </Grid>
+        </Grid>
         <NoteForm addNote={this.addNote} />
         <NoteList
           notes={this.state.notes}
