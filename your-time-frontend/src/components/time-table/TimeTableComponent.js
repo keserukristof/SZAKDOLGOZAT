@@ -1,6 +1,6 @@
 /* eslint-disable react/destructuring-assignment */
 import * as React from 'react';
-import Paper from '@material-ui/core/Paper';
+
 import { ViewState, EditingState } from '@devexpress/dx-react-scheduler';
 import {
   Scheduler,
@@ -19,6 +19,8 @@ import {
   ConfirmationDialog,
 } from '@devexpress/dx-react-scheduler-material-ui';
 
+import Paper from '@material-ui/core/Paper';
+
 const dragDisableIds = new Set([]);
 
 const allowDrag = ({ id }) => !dragDisableIds.has(id);
@@ -35,8 +37,6 @@ const appointmentComponent = (props) => {
 };
 
 class TimeTableComponent extends React.PureComponent {
-  _isMounted = false;
-
   constructor(props) {
     super(props);
 
@@ -58,7 +58,6 @@ class TimeTableComponent extends React.PureComponent {
   }
 
   componentDidMount() {
-    this._isMounted = true;
     fetch('/api/appointments')
       .then((res) => res.json())
       .then((appointments) => {
@@ -72,10 +71,6 @@ class TimeTableComponent extends React.PureComponent {
           console.log('Appointments fetched', appointments);
         });
       });
-  }
-
-  componentWillUnmount() {
-    this._isMounted = false;
   }
 
   changeAddedAppointment(addedAppointment) {
@@ -113,13 +108,11 @@ class TimeTableComponent extends React.PureComponent {
         let chanhedAppointmentId;
         data = data.map((appointment) => {
           if (changed[appointment.id]) {
-            chanhedAppointmentId = appointment.id
-            return { ...appointment, ...changed[appointment.id] }
-          } else {
-            return appointment
+            chanhedAppointmentId = appointment.id;
+            return { ...appointment, ...changed[appointment.id] };
           }
+          return appointment;
         });
-
 
         fetch('api/appointments', {
           method: 'PATCH',

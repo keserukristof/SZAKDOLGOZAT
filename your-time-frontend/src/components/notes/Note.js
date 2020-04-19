@@ -1,23 +1,21 @@
-import React from "react";
-import Checkbox from "@material-ui/core/Checkbox";
-import IconButton from "@material-ui/core/IconButton";
-import ListItem from "@material-ui/core/ListItem";
-import Typography from "@material-ui/core/Typography";
-import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
-import Paper from "@material-ui/core/Paper";
-import { makeStyles } from '@material-ui/core/styles';
-
+import React from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
-
+import { makeStyles } from '@material-ui/core/styles';
+import Checkbox from '@material-ui/core/Checkbox';
+import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
+import IconButton from '@material-ui/core/IconButton';
+import ListItem from '@material-ui/core/ListItem';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
   root: {
     background: 'linear-gradient(45deg, #FFFFFF 80%, #EBEBEB 100%)',
-    width: "auto"
+    width: 'auto',
   },
 });
-
 
 const Note = ({ note, toggleComplete, removeNote }) => {
   const classes = useStyles();
@@ -27,19 +25,17 @@ const Note = ({ note, toggleComplete, removeNote }) => {
   };
 
   const handleRemoveClick = () => {
-    console.log(note)
-    const noteId = note.id
-    axios.delete("/api/notes", { noteId })
-    .then(res => {
+    const noteId = note.id;
+    axios.delete('/api/notes', { noteId }).then((res) => {
       console.log(res);
       console.log(res.data);
-    })
+    });
     removeNote(note.id);
   };
 
   return (
     <Paper elevation={3} className={classes.root}>
-      <ListItem style={{ display: "flex" }}>
+      <ListItem style={{ display: 'flex' }}>
         <Checkbox
           color="primary"
           checked={note.completed}
@@ -48,7 +44,7 @@ const Note = ({ note, toggleComplete, removeNote }) => {
         <Typography
           variant="body1"
           style={{
-            color: note.completed ? "green" : "black"
+            color: note.completed ? 'green' : 'black',
           }}
         >
           {note.task}
@@ -59,6 +55,12 @@ const Note = ({ note, toggleComplete, removeNote }) => {
       </ListItem>
     </Paper>
   );
+};
+
+Note.propTypes = {
+  note: PropTypes.object.isRequired,
+  toggleComplete: PropTypes.func.isRequired,
+  removeNote: PropTypes.func.isRequired,
 };
 
 export default Note;

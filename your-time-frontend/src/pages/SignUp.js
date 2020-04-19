@@ -1,8 +1,9 @@
 import React from 'react';
-import { Grid, Input, MuiThemeProvider } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
 import { useForm } from 'react-hook-form';
+
+import { Grid, Input, MuiThemeProvider } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,58 +24,62 @@ const SignUp = () => {
 
   const onSubmit = (data, e) => {
     e.preventDefault();
-    console.log(data);
   };
 
   return (
     <MuiThemeProvider>
-      <Grid container justify='space-around' className={classes.root}>
+      <Grid container justify="space-around" className={classes.root}>
         <h1>Sign Up</h1>
       </Grid>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Grid container justify='space-around' className={classes.root}>
+        <Grid container justify="space-around" className={classes.root}>
           <Grid item className={classes.item}>
             <Input
-              type='text'
-              name='fullname'
-              placeholder='Full name'
+              type="text"
+              name="fullname"
+              placeholder="Full name"
               inputRef={register}
             />
           </Grid>
         </Grid>
-        <Grid container justify='space-around' className={classes.root}>
+        <Grid container justify="space-around" className={classes.root}>
           <Grid item className={classes.item}>
             <Input
-              type='text'
-              name='username'
-              placeholder='Username'
+              type="text"
+              name="username"
+              placeholder="Username"
               inputRef={register}
             />
           </Grid>
         </Grid>
-        <Grid container justify='space-around' className={classes.root}>
+        <Grid container justify="space-around" className={classes.root}>
           <Grid item className={classes.item}>
             <Input
-              type='password'
-              name='password'
-              placeholder='Password'
+              type="password"
+              name="password"
+              placeholder="Password"
               inputRef={register}
             />
           </Grid>
         </Grid>
-        <Grid container justify='space-around' className={classes.root}>
+        <Grid container justify="space-around" className={classes.root}>
           <Grid item className={classes.item}>
             <Input
-              type='email'
-              name='email'
-              placeholder='E-mail'
+              type="email"
+              name="email"
+              placeholder="E-mail"
               inputRef={register}
             />
           </Grid>
         </Grid>
-        <Grid container justify='space-around' className={classes.root}>
+        <Grid container justify="space-around" className={classes.root}>
           <Grid item className={classes.item}>
-            <Button onSubmit={onSubmit} type='submit' variant='contained' color='primary'>
+            <Button
+              onSubmit={onSubmit}
+              type="submit"
+              variant="contained"
+              color="primary"
+            >
               Submit
             </Button>
           </Grid>

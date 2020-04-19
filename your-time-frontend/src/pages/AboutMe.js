@@ -1,15 +1,17 @@
-import React from "react";
-import CostumCard from "../components/CostumCard";
-import { Grid } from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
-import { useSpring, animated } from "react-spring";
+import React from 'react';
+import { useSpring, animated } from 'react-spring';
+
+import { Grid } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+
+import CostumCard from '../components/CostumCard';
 
 const AboutMe = () => {
   const animation = useSpring({
     from: { marginLeft: -1000 },
     to: { marginLeft: 0 },
-    config: { duration: 1000 }
+    config: { duration: 1000 },
   });
 
   return (
@@ -17,7 +19,7 @@ const AboutMe = () => {
       <Grid container spacing={7}>
         <Grid item xs={12} sm={5}>
           <CostumCard
-            image={require("../images/myself.jpg")}
+            image={require('../images/myself.jpg')}
             hover="The author"
             title="The author"
             description="My name is Kristóf Keserű, third year DE IK PTI student. This is my thesis project. 

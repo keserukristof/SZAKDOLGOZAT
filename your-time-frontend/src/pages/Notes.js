@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import NoteForm from '../components/notes/NoteForm';
-import { Grid } from '@material-ui/core';
-import NoteList from '../components/notes/NoteList';
 import axios from 'axios';
 
-export default class NotesClassBased extends Component {
+import { Grid } from '@material-ui/core';
+
+import NoteForm from '../components/notes/NoteForm';
+import NoteList from '../components/notes/NoteList';
+
+class Notes extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -54,7 +56,7 @@ export default class NotesClassBased extends Component {
   removeNote = (id) => {
     console.log(id);
     this.setState({ notes: this.state.notes.filter((note) => note.id !== id) });
-    axios.delete('api/notes/', {params: {id: id}} ).then((res) => {
+    axios.delete('api/notes/', { params: { id: id } }).then((res) => {
       console.log(res);
       console.log(res.data);
     });
@@ -63,7 +65,7 @@ export default class NotesClassBased extends Component {
   render() {
     return (
       <div>
-        <Grid container justify='space-around'>
+        <Grid container justify="space-around">
           <Grid item>
             <h1>Add note!</h1>
           </Grid>
@@ -78,3 +80,5 @@ export default class NotesClassBased extends Component {
     );
   }
 }
+
+export default Notes;
