@@ -24,15 +24,15 @@ class Notes extends Component {
     });
   }
 
-  addNote = (note) => {
+  addNote(note) {
     this.setState({ notes: [...this.state.notes, note] });
     axios.post('/api/notes', note).then((res) => {
       console.log(res);
       console.log(res.data);
     });
-  };
+  }
 
-  toggleComplete = (id) => {
+  toggleComplete(id) {
     let noteToSend;
     this.setState({
       notes: this.state.notes.map((note) => {
@@ -51,16 +51,16 @@ class Notes extends Component {
       console.log(res);
       console.log(res.data);
     });
-  };
+  }
 
-  removeNote = (id) => {
+  removeNote(id) {
     console.log(id);
     this.setState({ notes: this.state.notes.filter((note) => note.id !== id) });
     axios.delete('api/notes/', { params: { id: id } }).then((res) => {
       console.log(res);
       console.log(res.data);
     });
-  };
+  }
 
   render() {
     return (
