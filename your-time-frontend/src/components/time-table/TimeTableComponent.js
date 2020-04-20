@@ -52,21 +52,13 @@ class TimeTableComponent extends React.PureComponent {
     this.onCommitChanges = this.commitChanges.bind(this);
     this.changeAddedAppointment = this.changeAddedAppointment.bind(this);
     this.changeAppointmentChanges = this.changeAppointmentChanges.bind(this);
-    this.changeEditingAppointmentId = this.changeEditingAppointmentId.bind(
-      this
-    );
+    this.changeEditingAppointmentId = this.changeEditingAppointmentId.bind(this);
   }
 
   componentDidMount() {
     fetch('/api/appointments')
       .then((res) => res.json())
       .then((appointments) => {
-        if (appointments) {
-          for (const appointment of appointments) {
-            appointment.startDate = new Date(appointment.startDate);
-            appointment.endDate = new Date(appointment.endDate);
-          }
-        }
         this.setState({ data: appointments }, () => {
           console.log('Appointments fetched', appointments);
         });
