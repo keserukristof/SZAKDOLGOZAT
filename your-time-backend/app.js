@@ -1,14 +1,14 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const dbLocation = require('./DataBaseConnection')
 
 app.use(express.json());
 app.use(cors());
 
 //database connection
 const mongoose = require('mongoose');
-const dbLocation =
-  'mongodb+srv://keserukristof:mongodb@yourtime-vfmvb.mongodb.net/test?retryWrites=true&w=majority';
+
 
 mongoose.connect(dbLocation, {
   useNewUrlParser: true,
@@ -26,19 +26,6 @@ const notes = require('./routes/notes')
 
 app.use('/api/appointments', appointments)
 app.use('/api/notes', notes)
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 const port = 5000;
 

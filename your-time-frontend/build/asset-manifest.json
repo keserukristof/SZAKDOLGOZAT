@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.js": "/SZAKDOLGOZAT/static/js/main.9c45b456.chunk.js",
+    "main.js.map": "/SZAKDOLGOZAT/static/js/main.9c45b456.chunk.js.map",
+    "runtime-main.js": "/SZAKDOLGOZAT/static/js/runtime-main.da6e6f01.js",
+    "runtime-main.js.map": "/SZAKDOLGOZAT/static/js/runtime-main.da6e6f01.js.map",
+    "static/js/2.03b98d43.chunk.js": "/SZAKDOLGOZAT/static/js/2.03b98d43.chunk.js",
+    "static/js/2.03b98d43.chunk.js.map": "/SZAKDOLGOZAT/static/js/2.03b98d43.chunk.js.map",
+    "index.html": "/SZAKDOLGOZAT/index.html",
+    "precache-manifest.c17aa4e7daeb3cc45e48b55133ef42c6.js": "/SZAKDOLGOZAT/precache-manifest.c17aa4e7daeb3cc45e48b55133ef42c6.js",
+    "service-worker.js": "/SZAKDOLGOZAT/service-worker.js",
+    "static/media/code.jpg": "/SZAKDOLGOZAT/static/media/code.a23a3b97.jpg",
+    "static/media/github.png": "/SZAKDOLGOZAT/static/media/github.13af5cc9.png",
+    "static/media/myself.jpg": "/SZAKDOLGOZAT/static/media/myself.c6da6aef.jpg",
+    "static/media/notes.jpg": "/SZAKDOLGOZAT/static/media/notes.7edb6a02.jpg",
+    "static/media/time_table.jpg": "/SZAKDOLGOZAT/static/media/time_table.5752e11d.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.da6e6f01.js",
+    "static/js/2.03b98d43.chunk.js",
+    "static/js/main.9c45b456.chunk.js"
+  ]
+}
