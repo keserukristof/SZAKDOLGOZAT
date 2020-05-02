@@ -23,7 +23,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # db connection
-/DatabaseConnection.js
+*/DatabaseConnection.js
 
 # node modules
-/node_modules
+node_modules/
