@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const dbLocation = require('./DataBaseConnection')
+const dbLocation = require('./dataBaseConnection')
 
 app.use(express.json());
 app.use(cors());

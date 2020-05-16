@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -25,11 +24,6 @@ const Note = ({ note, toggleComplete, removeNote }) => {
   };
 
   const handleRemoveClick = () => {
-    const noteId = note.id;
-    axios.delete('/api/notes', { noteId }).then((res) => {
-      console.log(res);
-      console.log(res.data);
-    });
     removeNote(note.id);
   };
 
