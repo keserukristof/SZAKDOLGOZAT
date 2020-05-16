@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import uuid from 'react-uuid';
 import PropTypes from 'prop-types';
 
+
 import { makeStyles } from '@material-ui/core/styles';
 import { MuiThemeProvider, Grid } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
@@ -41,26 +42,26 @@ const NoteForm = ({ addNote }) => {
   };
 
   return (
-    <MuiThemeProvider>
-      <form onSubmit={handleSubmit}>
-        <Grid container justify="space-around" className={classes.root}>
-          <Grid item className={classes.item}>
-            <Input
-              value={note.task}
-              onChange={handleTaskInputChange}
-              name="task"
-              placeholder="Task"
-              multiline
-            />
-          </Grid>
-          <Grid item className={classes.item}>
-            <Button type="submit" variant="contained" color="primary">
-              Submit
+      <MuiThemeProvider>
+        <form onSubmit={handleSubmit}>
+          <Grid container justify="space-around" className={classes.root}>
+            <Grid item className={classes.item}>
+              <Input
+                value={note.task}
+                onChange={handleTaskInputChange}
+                name="task"
+                placeholder="Task"
+                multiline
+              />
+            </Grid>
+            <Grid item className={classes.item}>
+              <Button type="submit" variant="contained" color="primary">
+                Submit
             </Button>
+            </Grid>
           </Grid>
-        </Grid>
-      </form>
-    </MuiThemeProvider>
+        </form>
+      </MuiThemeProvider>
   );
 };
 

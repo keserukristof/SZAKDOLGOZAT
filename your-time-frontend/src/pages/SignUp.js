@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSpring, animated } from 'react-spring';
 import { useForm } from 'react-hook-form';
 
 import { Grid, Input, MuiThemeProvider } from '@material-ui/core';
@@ -18,6 +19,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SignUp = () => {
+  const animation = useSpring({
+    from: { marginLeft: -2300 },
+    to: { marginLeft: 0 },
+    config: { duration: 1000 },
+  });
+
   const classes = useStyles();
 
   const { register, handleSubmit } = useForm();
@@ -27,65 +34,67 @@ const SignUp = () => {
   };
 
   return (
-    <MuiThemeProvider>
-      <Grid container justify="space-around" className={classes.root}>
-        <h1>Sign Up</h1>
-      </Grid>
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <animated.div style={animation}>
+      <MuiThemeProvider>
         <Grid container justify="space-around" className={classes.root}>
-          <Grid item className={classes.item}>
-            <Input
-              type="text"
-              name="fullname"
-              placeholder="Full name"
-              inputRef={register}
-            />
-          </Grid>
+          <h1>Sign Up</h1>
         </Grid>
-        <Grid container justify="space-around" className={classes.root}>
-          <Grid item className={classes.item}>
-            <Input
-              type="text"
-              name="username"
-              placeholder="Username"
-              inputRef={register}
-            />
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Grid container justify="space-around" className={classes.root}>
+            <Grid item className={classes.item}>
+              <Input
+                type="text"
+                name="fullname"
+                placeholder="Full name"
+                inputRef={register}
+              />
+            </Grid>
           </Grid>
-        </Grid>
-        <Grid container justify="space-around" className={classes.root}>
-          <Grid item className={classes.item}>
-            <Input
-              type="password"
-              name="password"
-              placeholder="Password"
-              inputRef={register}
-            />
+          <Grid container justify="space-around" className={classes.root}>
+            <Grid item className={classes.item}>
+              <Input
+                type="text"
+                name="username"
+                placeholder="Username"
+                inputRef={register}
+              />
+            </Grid>
           </Grid>
-        </Grid>
-        <Grid container justify="space-around" className={classes.root}>
-          <Grid item className={classes.item}>
-            <Input
-              type="email"
-              name="email"
-              placeholder="E-mail"
-              inputRef={register}
-            />
+          <Grid container justify="space-around" className={classes.root}>
+            <Grid item className={classes.item}>
+              <Input
+                type="password"
+                name="password"
+                placeholder="Password"
+                inputRef={register}
+              />
+            </Grid>
           </Grid>
-        </Grid>
-        <Grid container justify="space-around" className={classes.root}>
-          <Grid item className={classes.item}>
-            <Button
-              onSubmit={onSubmit}
-              type="submit"
-              variant="contained"
-              color="primary"
-            >
-              Submit
+          <Grid container justify="space-around" className={classes.root}>
+            <Grid item className={classes.item}>
+              <Input
+                type="email"
+                name="email"
+                placeholder="E-mail"
+                inputRef={register}
+              />
+            </Grid>
+          </Grid>
+          <Grid container justify="space-around" className={classes.root}>
+            <Grid item className={classes.item}>
+              <Button
+                onSubmit={onSubmit}
+                type="submit"
+                variant="contained"
+                color="primary"
+              >
+                Submit
             </Button>
+            </Grid>
           </Grid>
-        </Grid>
-      </form>
-    </MuiThemeProvider>
+        </form>
+      </MuiThemeProvider>
+    </animated.div>
   );
 };
 

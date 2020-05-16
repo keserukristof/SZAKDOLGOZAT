@@ -13,6 +13,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import ListItemLink from './ListItemLink';
 
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import HomeIcon from '@material-ui/icons/Home';
 import TableChartIcon from '@material-ui/icons/TableChart';
 import NoteIcon from '@material-ui/icons/Note';
@@ -83,8 +85,8 @@ function ResponsiveDrawer(props) {
           primary="About the author"
           icon={<PortraitIcon />}
         />
-        <ListItemLink to="/login" primary="Login" icon={<PortraitIcon />} />
-        <ListItemLink to="sign-up" primary="Sign up" icon={<PortraitIcon />} />
+        <ListItemLink to="/login" primary="Log in" icon={<ArrowForwardIcon />} />
+        <ListItemLink to="/sign-up" primary="Sign up" icon={<ArrowUpwardIcon />} />
       </List>
     </div>
   );
