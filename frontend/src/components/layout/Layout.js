@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+
+import { AuthContext } from '../../context/auth-contex';
+
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
@@ -53,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ResponsiveDrawer(props) {
+const ResponsiveDrawer = (props) => {
   const { container } = props;
   const classes = useStyles();
   const theme = useTheme();
@@ -63,18 +66,24 @@ function ResponsiveDrawer(props) {
     setMobileOpen(!mobileOpen);
   };
 
+  const auth = useContext(AuthContext);
+
   const drawer = (
     <div>
       <div className={classes.toolbar} />
       <Divider />
       <List>
         <ListItemLink to="/" primary="Home page" icon={<HomeIcon />} />
-        <ListItemLink
-          to="/time-table"
-          primary="Timetable planner"
-          icon={<TableChartIcon />}
-        />
-        <ListItemLink to="/notes" primary="Notes" icon={<NoteIcon />} />
+        {auth.isLoggedIn && (
+          <ListItemLink
+            to="/time-table"
+            primary="Timetable planner"
+            icon={<TableChartIcon />}
+          />
+        )}
+        {auth.isLoggedIn && (
+          <ListItemLink to="/notes" primary="Notes" icon={<NoteIcon />} />
+        )}
         <ListItemLink
           to="/about-the-program"
           primary="About the program"
@@ -85,8 +94,20 @@ function ResponsiveDrawer(props) {
           primary="About the author"
           icon={<PortraitIcon />}
         />
-        <ListItemLink to="/login" primary="Log in" icon={<ArrowForwardIcon />} />
-        <ListItemLink to="/sign-up" primary="Sign up" icon={<ArrowUpwardIcon />} />
+        {!auth.isLoggedIn && (
+          <ListItemLink
+            to="/login"
+            primary="Log in"
+            icon={<ArrowForwardIcon />}
+          />
+        )}
+        {!auth.isLoggedIn && (
+          <ListItemLink
+            to="/sign-up"
+            primary="Sign up"
+            icon={<ArrowUpwardIcon />}
+          />
+        )}
       </List>
     </div>
   );
@@ -147,7 +168,7 @@ function ResponsiveDrawer(props) {
       </main>
     </div>
   );
-}
+};
 
 ResponsiveDrawer.propTypes = {
   /**

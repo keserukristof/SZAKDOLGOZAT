@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+
+import { AuthContext } from './context/auth-contex';
 
 import AboutMe from './pages/AboutMe';
 import AboutTheProgram from './pages/AboutTheProgram';
@@ -11,19 +13,33 @@ import SignUp from './pages/SignUp';
 import TimeTable from './pages/TimeTable';
 
 const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const login = useCallback(() => {
+    setIsLoggedIn(true);
+  }, []);
+
+  const logout = useCallback(() => {
+    setIsLoggedIn(false);
+  }, []);
+
   return (
-    <Router>
-      <Layout>
-        <Route exact path="/" component={Home} />
-        <Route path="/time-table" component={TimeTable} />
-        <Route path="/notes" component={Notes} />
-        <Route path="/about-the-program" component={AboutTheProgram} />
-        <Route path="/about-the-author" component={AboutMe} />
-        <Route path="/login" component={Login} />
-        <Route path="/sign-up" component={SignUp} />
-        <Redirect to="/" />
-      </Layout>
-    </Router>
+    <AuthContext.Provider
+      value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}
+    >
+      <Router>
+        <Layout>
+          <Route exact path="/" component={Home} />
+          <Route path="/time-table" component={TimeTable} />
+          <Route path="/notes" component={Notes} />
+          <Route path="/about-the-program" component={AboutTheProgram} />
+          <Route path="/about-the-author" component={AboutMe} />
+          <Route path="/login" component={Login} />
+          <Route path="/sign-up" component={SignUp} />
+          <Redirect to="/" />
+        </Layout>
+      </Router>
+    </AuthContext.Provider>
   );
 };
 

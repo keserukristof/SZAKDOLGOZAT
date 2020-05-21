@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {useContext} from 'react';
 
 import { useSpring, animated } from 'react-spring';
 
 import { useForm } from 'react-hook-form';
+
+import {AuthContext} from '../context/auth-contex'
 
 import { Grid, Input, MuiThemeProvider } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -29,11 +31,14 @@ const Login = () => {
 
   const classes = useStyles();
 
+  const auth = useContext(AuthContext)
+
   const { register, handleSubmit, errors } = useForm();
 
   const onSubmit = (data, e) => {
     e.preventDefault();
     console.log(data);
+    auth.login();
   };
 
   return (
