@@ -23,9 +23,11 @@ connection.once('open', function callback () {
 
 const appointments = require('./routes/appointments')
 const notes = require('./routes/notes')
+const users = require('./routes/users');
 
 app.use('/api/appointments', appointments)
 app.use('/api/notes', notes)
+app.use('/api/users', users)
 
 const port = 5000;
 

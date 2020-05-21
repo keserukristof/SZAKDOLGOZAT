@@ -3,6 +3,9 @@ const express = require('express');
 const router = express.Router();
 
 const Notes = require('../models/Notes'); 
+const checkAuth = require('../middlewares/CheckAuth');
+
+router.use(checkAuth);
 
 router.post('/', (req, res, next) => {
   const note = new Notes({

@@ -1,8 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useSpring, animated } from 'react-spring';
-
-import { useForm } from 'react-hook-form';
 
 import { Grid, Input, MuiThemeProvider } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -20,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Login = () => {
+const Auth = () => {
   const animation = useSpring({
     from: { marginLeft: -2300 },
     to: { marginLeft: 0 },
@@ -29,51 +27,30 @@ const Login = () => {
 
   const classes = useStyles();
 
-  const { register, handleSubmit, errors } = useForm();
-
-  const onSubmit = (data, e) => {
-    e.preventDefault();
-    console.log(data);
-  };
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   return (
     <animated.div style={animation}>
       <MuiThemeProvider>
         <Grid container justify="space-around" className={classes.root}>
-          <h1>Log in</h1>
+          <h1>Log in or Sign up</h1>
         </Grid>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form>
           <Grid container justify="space-around" className={classes.root}>
             <Grid item className={classes.item}>
-              <Input
-                type="email"
-                name="email"
-                placeholder="E-mail"
-                inputRef={register({ required: true })}
-              />
-              {errors.email && <p>This is required!</p>}
+              <Input type="email" name="email" placeholder="E-mail" />
             </Grid>
           </Grid>
           <Grid container justify="space-around" className={classes.root}>
             <Grid item className={classes.item}>
-              <Input
-                type="password"
-                name="password"
-                placeholder="Password"
-                inputRef={register({ required: true, minLength: 6 })}
-              />
-              {errors.password && errors.password.type === 'required' && (
-                <p>This is required!</p>
-              )}
-              {errors.password && errors.password.type === 'minLength' && (
-                <p>The min lenght is 6!</p>
-              )}
+              <Input type="password" name="password" placeholder="Password" />
             </Grid>
           </Grid>
           <Grid container justify="space-around" className={classes.root}>
             <Grid item className={classes.item}>
               <Button type="submit" variant="contained" color="primary">
-                Submit
+                Sign Up
               </Button>
             </Grid>
           </Grid>
@@ -83,4 +60,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Auth;

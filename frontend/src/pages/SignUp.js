@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { useSpring, animated } from 'react-spring';
+
 import { useForm } from 'react-hook-form';
 
 import { Grid, Input, MuiThemeProvider } from '@material-ui/core';
@@ -27,37 +29,29 @@ const SignUp = () => {
 
   const classes = useStyles();
 
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, errors } = useForm();
 
   const onSubmit = (data, e) => {
     e.preventDefault();
+    console.log(data);
   };
 
   return (
     <animated.div style={animation}>
       <MuiThemeProvider>
         <Grid container justify="space-around" className={classes.root}>
-          <h1>Sign Up</h1>
+          <h1>Sign up</h1>
         </Grid>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container justify="space-around" className={classes.root}>
             <Grid item className={classes.item}>
               <Input
-                type="text"
-                name="fullname"
-                placeholder="Full name"
-                inputRef={register}
+                type="email"
+                name="email"
+                placeholder="E-mail"
+                inputRef={register({ required: true })}
               />
-            </Grid>
-          </Grid>
-          <Grid container justify="space-around" className={classes.root}>
-            <Grid item className={classes.item}>
-              <Input
-                type="text"
-                name="username"
-                placeholder="Username"
-                inputRef={register}
-              />
+              {errors.email && <p>This is required!</p>}
             </Grid>
           </Grid>
           <Grid container justify="space-around" className={classes.root}>
@@ -66,30 +60,21 @@ const SignUp = () => {
                 type="password"
                 name="password"
                 placeholder="Password"
-                inputRef={register}
+                inputRef={register({ required: true, minLength: 6 })}
               />
+              {errors.password && errors.password.type === 'required' && (
+                <p>This is required!</p>
+              )}
+              {errors.password && errors.password.type === 'minLength' && (
+                <p>The min lenght is 6!</p>
+              )}
             </Grid>
           </Grid>
           <Grid container justify="space-around" className={classes.root}>
             <Grid item className={classes.item}>
-              <Input
-                type="email"
-                name="email"
-                placeholder="E-mail"
-                inputRef={register}
-              />
-            </Grid>
-          </Grid>
-          <Grid container justify="space-around" className={classes.root}>
-            <Grid item className={classes.item}>
-              <Button
-                onSubmit={onSubmit}
-                type="submit"
-                variant="contained"
-                color="primary"
-              >
+              <Button type="submit" variant="contained" color="primary">
                 Submit
-            </Button>
+              </Button>
             </Grid>
           </Grid>
         </form>
