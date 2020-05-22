@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 
 import { AuthContext } from './context/auth-contex';
 
@@ -23,20 +23,39 @@ const App = () => {
     setIsLoggedIn(false);
   }, []);
 
+  let routes;
+
+  if (isLoggedIn) {
+    routes = (
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/time-table" component={TimeTable} />
+        <Route path="/notes" component={Notes} />
+        <Route path="/about-the-program" component={AboutTheProgram} />
+        <Route path="/about-the-author" component={AboutMe} />
+        <Redirect to="/" />
+      </Switch>
+    );
+  } else {
+    routes = (
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/about-the-program" component={AboutTheProgram} />
+        <Route path="/about-the-author" component={AboutMe} />
+        <Route path="/login" component={Login} />
+        <Route path="/sign-up" component={SignUp} />
+        <Redirect to="/login" />
+      </Switch>
+    );
+  }
+
   return (
     <AuthContext.Provider
       value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}
     >
       <Router>
         <Layout>
-          <Route exact path="/" component={Home} />
-          <Route path="/time-table" component={TimeTable} />
-          <Route path="/notes" component={Notes} />
-          <Route path="/about-the-program" component={AboutTheProgram} />
-          <Route path="/about-the-author" component={AboutMe} />
-          <Route path="/login" component={Login} />
-          <Route path="/sign-up" component={SignUp} />
-          <Redirect to="/" />
+          {routes}
         </Layout>
       </Router>
     </AuthContext.Provider>

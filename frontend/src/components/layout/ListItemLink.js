@@ -21,7 +21,7 @@ const ListItemLink = (props) => {
   return (
     <li>
       <ListItem button component={renderLink}>
-        {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
+        <ListItemIcon>{icon}</ListItemIcon>
         <ListItemText primary={primary} />
       </ListItem>
     </li>

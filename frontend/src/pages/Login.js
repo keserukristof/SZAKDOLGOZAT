@@ -1,10 +1,10 @@
-import React, {useContext} from 'react';
+import React, { useContext, useState } from 'react';
 
 import { useSpring, animated } from 'react-spring';
 
 import { useForm } from 'react-hook-form';
 
-import {AuthContext} from '../context/auth-contex'
+import { AuthContext } from '../context/auth-contex';
 
 import { Grid, Input, MuiThemeProvider } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -31,14 +31,34 @@ const Login = () => {
 
   const classes = useStyles();
 
-  const auth = useContext(AuthContext)
+  const auth = useContext(AuthContext);
+
+  const [error, setError] = useState();
 
   const { register, handleSubmit, errors } = useForm();
 
-  const onSubmit = (data, e) => {
+  const onSubmit = async (data, e) => {
     e.preventDefault();
-    console.log(data);
-    auth.login();
+    try {
+      const response = await fetch('http://localhost:5000/api/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: data.email,
+          password: data.password,
+        }),
+      });
+
+      const responseData = await response.json();
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      }
+      auth.login();
+    } catch (err) {
+      setError(err.message || 'Something went wrong.');
+    }
   };
 
   return (
@@ -47,6 +67,13 @@ const Login = () => {
         <Grid container justify="space-around" className={classes.root}>
           <h1>Log in</h1>
         </Grid>
+        {error && (
+          <Grid container justify="space-around" className={classes.root}>
+            <p style={{ color: 'red' }}>
+              Something went wrong. Please try again.
+            </p>
+          </Grid>
+        )}
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container justify="space-around" className={classes.root}>
             <Grid item className={classes.item}>
