@@ -5,6 +5,30 @@ const HttpError = require('../models/HttpError');
 const Note = require('../models/Notes');
 const User = require('../models/User');
 
+const getNoteById = async (req, res, next) => {
+  const noteId = req.params.nid;
+
+  let note;
+  try {
+    note = await Note.findById(noteId);
+  } catch (err) {
+    const error = new HttpError(
+      'Something went wrong, could not find a note.',
+      500
+    );
+    return next(error);
+  }
+
+  if (!note) {
+    const error = new HttpError(
+      'Could not find note for the provided id.',
+      404
+    );
+    return next(error);
+  }
+
+  res.json({ note: note.toObject({ getters: true }) });
+};
 
 const getNotesByUserId = async (req, res, next) => {
   const userId = req.params.uid;
@@ -96,7 +120,7 @@ const updateNote = async (req, res, next) => {
     );
   }
 
-  const { task, completed } = req.body;
+  const { completed } = req.body;
   const noteId = req.params.nid;
 
   let note;
@@ -110,8 +134,11 @@ const updateNote = async (req, res, next) => {
     return next(error);
   }
 
-  note.task = task;
-  note.completed = completed;
+  try {
+    note.completed = await completed;
+  } catch (err) {
+    console.log(err)
+  }
 
   try {
     await note.save();
@@ -122,8 +149,7 @@ const updateNote = async (req, res, next) => {
     );
     return next(error);
   }
-
-  res.status(200).json({ note: note.toObject({ getters: true }) });
+    res.status(200).json({ note: note.toObject({ getters: true }) });
 };
 
 const deleteNote = async (req, res, next) => {
@@ -163,6 +189,7 @@ const deleteNote = async (req, res, next) => {
   res.status(200).json({ message: 'Deleted note.' });
 };
 
+exports.getNoteById = getNoteById;
 exports.getNotesByUserId = getNotesByUserId;
 exports.createNote = createNote;
 exports.updateNote = updateNote;

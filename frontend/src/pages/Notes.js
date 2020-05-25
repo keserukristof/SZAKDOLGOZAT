@@ -14,7 +14,7 @@ const Notes = () => {
   const userId = auth.userId;
 
   useEffect(() => {
-    console.log(userId)
+    console.log(userId);
     axios.get(`http://localhost:5000/api/notes/user/${userId}`).then((res) => {
       const notesData = res.data;
       console.log(notesData);
@@ -23,7 +23,7 @@ const Notes = () => {
   }, [userId]);
 
   const addNote = (note) => {
-    console.log(notes)
+    console.log(notes);
     setNotes([...notes, note]);
 
     fetch('http://localhost:5000/api/notes', {
@@ -38,8 +38,8 @@ const Notes = () => {
         creator: auth.userId,
       }),
     });
-    
-    console.log(note)
+
+    console.log(note);
   };
 
   const toggleComplete = (id) => {
@@ -57,18 +57,24 @@ const Notes = () => {
       })
     );
     noteToSend = { ...noteToSend, completed: !noteToSend.completed };
-    axios.patch('api/notes', noteToSend).then((res) => {
-      console.log(res);
-      console.log(res.data);
+    console.log(noteToSend)
+    fetch(`http://localhost:5000/api/notes/${noteToSend._id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        completed: noteToSend.completed,
+      }),
     });
   };
 
   const removeNote = (id) => {
-    console.log(id);
+    const noteToDelete = notes.find((note) => note.id === id)
+    console.log(noteToDelete)
     setNotes(notes.filter((note) => note.id !== id));
-    axios.delete('api/notes/', { params: { id: id } }).then((res) => {
-      console.log(res);
-      console.log(res.data);
+    fetch(`http://localhost:5000/api/notes/${noteToDelete._id}`, {
+      method: 'DELETE',
     });
   };
 
