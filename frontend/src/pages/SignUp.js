@@ -56,7 +56,7 @@ const SignUp = () => {
         throw new Error(responseData.message);
       }
       console.log(responseData);
-      auth.login();
+      auth.login(responseData.userId);
     } catch (err) {
       console.log(err);
       setError(err.message || 'Something went wrong.');

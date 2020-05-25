@@ -1,68 +1,16 @@
-const express = require('express');
+const express = require("express");
+const { check } = require("express-validator");
+
+const notesControllers = require("../controllers/notes-controller");
 
 const router = express.Router();
 
-const Notes = require('../models/Notes'); 
-const checkAuth = require('../middlewares/CheckAuth');
+router.get("/user/:uid", notesControllers.getNotesByUserId);
 
-router.use(checkAuth);
+router.post("/", notesControllers.createNote);
 
-router.post('/', (req, res, next) => {
-  const note = new Notes({
-    id: req.body.id,
-    task: req.body.task,
-    completed: req.body.completed
-  });
+router.patch("/:id", notesControllers.updateNote);
 
-  note
-    .save()
-    .then((result) => {
-      res.status(201).json(result);
-    })
-    .catch((err) => {
-      res.status(500).json(err);
-    });
-});
-
-router.get('/', (req, res, next) => {
-  const { query } = req;
-  Notes.find(query)
-    .exec()
-    .then((result) => {
-      res.json(result);
-    })
-    .catch((err) => {
-      res.json(err);
-    });
-});
-
-router.patch('/', (req, res, next) => {
-  Notes.updateOne(
-    { id: req.body.id },
-    {
-      $set: {
-        completed: req.body.completed
-      }
-    }
-  )
-    .exec()
-    .then((result) => {
-      res.json(result);
-    })
-    .catch((err) => {
-      res.json(err);
-    });
-});
-
-router.delete('/', (req, res, next) => {
-  Notes.deleteOne()
-    .exec()
-    .then((result) => {
-      res.json(result);
-    })
-    .catch((err) => {
-      res.json(err);
-    });
-});
+router.delete("/:pid", notesControllers.deleteNote);
 
 module.exports = router;
