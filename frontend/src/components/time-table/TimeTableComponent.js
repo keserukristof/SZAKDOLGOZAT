@@ -1,6 +1,9 @@
 /* eslint-disable react/destructuring-assignment */
 import * as React from 'react';
 
+import axios from 'axios';
+
+import { AuthContext } from '../../context/auth-contex';
 import { ViewState, EditingState } from '@devexpress/dx-react-scheduler';
 import {
   Scheduler,
@@ -37,6 +40,7 @@ const appointmentComponent = (props) => {
 };
 
 class TimeTableComponent extends React.PureComponent {
+  static contextType = AuthContext;
   constructor(props) {
     super(props);
 
@@ -52,17 +56,29 @@ class TimeTableComponent extends React.PureComponent {
     this.onCommitChanges = this.commitChanges.bind(this);
     this.changeAddedAppointment = this.changeAddedAppointment.bind(this);
     this.changeAppointmentChanges = this.changeAppointmentChanges.bind(this);
-    this.changeEditingAppointmentId = this.changeEditingAppointmentId.bind(this);
+    this.changeEditingAppointmentId = this.changeEditingAppointmentId.bind(
+      this
+    );
   }
 
   componentDidMount() {
-    fetch('/api/appointments')
-      .then((res) => res.json())
-      .then((appointments) => {
-        this.setState({ data: appointments }, () => {
-          console.log('Appointments fetched', appointments);
-        });
+    const auth = this.context;
+    const userId = auth.userId
+    console.log(auth.userId)
+    axios.get(`http://localhost:5000/api/appointments/user/${userId}`).then((res) => {
+      const appointmentsData = res.data;
+      this.setState({ data: appointmentsData.appointments }, () => {
+        console.log('Appointments fetched', appointmentsData);
       });
+    });
+    // fetch(`http://localhost:5000/api/appointments/user/${auth.userId}`)
+    //   .then((res) => res.json())
+    //   .then((appointments) => {
+    //     console.log(appointments);
+    //     this.setState({ data: appointments }, () => {
+    //       console.log('Appointments fetched', appointments);
+    //     });
+    //   });
   }
 
   changeAddedAppointment(addedAppointment) {
@@ -78,13 +94,18 @@ class TimeTableComponent extends React.PureComponent {
   }
 
   commitChanges({ added, changed, deleted }) {
+    const auth = this.context;
     this.setState((state) => {
       let { data } = state;
       if (added) {
         const startingAddedId =
           data.length > 0 ? data[data.length - 1].id + 1 : 0;
-        data = [...data, { id: startingAddedId, ...added }];
-        fetch('/api/appointments', {
+        data = [
+          ...data,
+          {...added, creator: auth.userId, id: startingAddedId },
+        ];
+        console.log(data[data.length - 1]);
+        fetch('http://localhost:5000/api/appointments', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data[data.length - 1]),
@@ -106,7 +127,7 @@ class TimeTableComponent extends React.PureComponent {
           return appointment;
         });
 
-        fetch('api/appointments', {
+        fetch('http://localhost:5000/api/appointments', {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data[chanhedAppointmentId]),

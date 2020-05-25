@@ -19,6 +19,9 @@ const schema = new Schema({
     type: Date,
     require: true,
   },
+  notes: {
+    type: String
+  },
   rRule: {
     type: String,
   },
@@ -27,6 +30,11 @@ const schema = new Schema({
   },
   allDay: {
     type: Boolean,
+  },
+  creator: {
+    type: mongoose.Types.ObjectId,
+    required: true,
+    ref: "User",
   },
 });
 

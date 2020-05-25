@@ -12,6 +12,13 @@ const schema = new Schema({
       ref: "Notes",
     },
   ],
+  appointments: [
+    {
+      type: mongoose.Types.ObjectId,
+      required: true,
+      ref: "Appointments",
+    },
+  ],
 });
 
 module.exports = mongoose.model("User", schema);

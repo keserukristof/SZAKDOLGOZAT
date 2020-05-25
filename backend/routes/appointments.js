@@ -1,77 +1,18 @@
-const express = require('express');
+const express = require("express");
+const { check } = require("express-validator");
+
+const appointmentsControllers = require("../controllers/appointments-controller");
 
 const router = express.Router();
 
-const Appointments = require('../models/Appointments');
-const checkAuth = require('../middlewares/CheckAuth');
+router.get('/:aid', appointmentsControllers.getAppointmentById);
 
-//router.use(checkAuth);
+router.get("/user/:uid", appointmentsControllers.getAppointmentsByUserId);
 
-router.post('/', (req, res, next) => {
-  const appointment = new Appointments({
-    id: req.body.id,
-    title: req.body.title,
-    startDate: req.body.startDate,
-    endDate: req.body.endDate,
-    rRule: req.body.rRule,
-    exDate: req.body.exDate,
-    allDay: req.body.allDay,
-  });
+router.post("/", appointmentsControllers.createAppointment);
 
-  appointment
-    .save()
-    .then((result) => {
-      res.status(201).json(result);
-    })
-    .catch((err) => {
-      res.status(500).json(err);
-    });
-});
+router.patch("/:aid", appointmentsControllers.updateAppointment);
 
-router.get('/', (req, res, next) => {
-  Appointments.find()
-    .exec()
-    .then((result) => {
-      res.json(result);
-    })
-    .catch((err) => {
-      res.json(err);
-    });
-});
-
-router.patch('/', (req, res, next) => {
-  Appointments.updateOne(
-    { id: req.body.id },
-    {
-      $set: {
-        _id: req.body._id,
-        title: req.body.title,
-        startDate: req.body.startDate,
-        endDate: req.body.endDate,
-        rRule: req.body.rRule,
-        exDate: req.body.exDate,
-        allDay: req.body.allDay,
-      },
-    }
-  )
-    .exec()
-    .then((result) => {
-      res.json(result);
-    })
-    .catch((err) => {
-      res.json(err);
-    });
-});
-
-router.delete('/', (req, res, next) => {
-  Appointments.deleteOne({ id: req.body.id })
-    .exec()
-    .then((result) => {
-      res.json(result);
-    })
-    .catch((err) => {
-      res.json(err);
-    });
-});
+router.delete("/:aid", appointmentsControllers.deleteAppointment);
 
 module.exports = router;
