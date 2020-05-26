@@ -63,22 +63,16 @@ class TimeTableComponent extends React.PureComponent {
 
   componentDidMount() {
     const auth = this.context;
-    const userId = auth.userId
-    console.log(auth.userId)
-    axios.get(`http://localhost:5000/api/appointments/user/${userId}`).then((res) => {
-      const appointmentsData = res.data;
-      this.setState({ data: appointmentsData.appointments }, () => {
-        console.log('Appointments fetched', appointmentsData);
+    const userId = auth.userId;
+    console.log(auth.userId);
+    axios
+      .get(`http://localhost:5000/api/appointments/user/${userId}`)
+      .then((res) => {
+        const appointmentsData = res.data;
+        this.setState({ data: appointmentsData.appointments }, () => {
+          console.log('Appointments fetched', appointmentsData);
+        });
       });
-    });
-    // fetch(`http://localhost:5000/api/appointments/user/${auth.userId}`)
-    //   .then((res) => res.json())
-    //   .then((appointments) => {
-    //     console.log(appointments);
-    //     this.setState({ data: appointments }, () => {
-    //       console.log('Appointments fetched', appointments);
-    //     });
-    //   });
   }
 
   changeAddedAppointment(addedAppointment) {
@@ -102,7 +96,7 @@ class TimeTableComponent extends React.PureComponent {
           data.length > 0 ? data[data.length - 1].id + 1 : 0;
         data = [
           ...data,
-          {...added, creator: auth.userId, id: startingAddedId },
+          { ...added, creator: auth.userId, id: startingAddedId },
         ];
         console.log(data[data.length - 1]);
         fetch('http://localhost:5000/api/appointments', {
@@ -127,11 +121,17 @@ class TimeTableComponent extends React.PureComponent {
           return appointment;
         });
 
-        fetch('http://localhost:5000/api/appointments', {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data[chanhedAppointmentId]),
-        })
+        const appointmentToChange = data[chanhedAppointmentId];
+        console.log(appointmentToChange._id);
+        const appointmentToChange_id = appointmentToChange._id;
+        fetch(
+          `http://localhost:5000/api/appointments/${appointmentToChange_id}`,
+          {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data[chanhedAppointmentId]),
+          }
+        )
           .then((result) => {
             console.log(result);
           })
@@ -140,18 +140,17 @@ class TimeTableComponent extends React.PureComponent {
           });
       }
       if (deleted !== undefined) {
-        let deletedId;
+        const appointmentToDelete = data[deleted];
+        const appointmentToDelete_id = appointmentToDelete._id;
         data = data.filter((appointment) => {
-          if (appointment.id === deleted) {
-            deletedId = appointment.id;
-          }
           return appointment.id !== deleted;
         });
-        fetch('http://localhost:5000/api/appointments/', {
-          method: 'DELETE',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id: deletedId }),
-        })
+        fetch(
+          `http://localhost:5000/api/appointments/${appointmentToDelete_id}`,
+          {
+            method: 'DELETE',
+          }
+        )
           .then((response) => console.log(response))
           .catch((err) => console.log(err));
       }

@@ -34,13 +34,13 @@ const getAppointmentsByUserId = async (req, res, next) => {
   const userId = req.params.uid;
   let userWithAppointments;
   try {
-    userWithAppointments = await User.findById(userId).populate('appointments');
+    userWithAppointments = await User.findById(userId).populate("appointments");
   } catch (err) {
     const error = new HttpError(
-      'Fetching appointments failed, please try again later.',
+      "Fetching appointments failed, please try again later.",
       500
     );
-    console.log((err))
+    console.log(err);
     return next(error);
   }
 
@@ -115,7 +115,7 @@ const createAppointment = async (req, res, next) => {
     console.log("Start session done");
     sess.startTransaction();
     console.log("Start transaction done");
-    console.log(createdAppointment)
+    console.log(createdAppointment);
     await createdAppointment.save({ session: sess });
     console.log("Created appointment saved");
     user.appointments.push(createdAppointment);
@@ -143,7 +143,7 @@ const updateAppointment = async (req, res, next) => {
     );
   }
 
-  const { completed } = req.body;
+  const { title, startDate, endDate, notes, rRule, exDate, allDay } = req.body;
   const appointmentId = req.params.aid;
 
   let appointment;
@@ -151,14 +151,20 @@ const updateAppointment = async (req, res, next) => {
     appointment = await Appointments.findById(appointmentId);
   } catch (err) {
     const error = new HttpError(
-      "Something went wrong, could not update appointment.",
+      "Something went wrong, could not update appointment because of the _id.",
       500
     );
     return next(error);
   }
 
   try {
-    appointment.completed = await completed;
+    appointment.title = await title;
+    appointment.startDate = await startDate;
+    appointment.endDate = await endDate;
+    appointment.notes = await notes;
+    appointment.rRule = await rRule;
+    appointment.exDate = await exDate;
+    appointment.allDay = await allDay;
   } catch (err) {
     console.log(err);
   }
