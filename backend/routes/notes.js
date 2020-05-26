@@ -1,9 +1,14 @@
 const express = require("express");
 const { check } = require("express-validator");
 
+const router = express.Router();
+
 const notesControllers = require("../controllers/notes-controller");
 
-const router = express.Router();
+const checkAuth = require('../middlewares/CheckAuth');
+
+
+router.use(checkAuth);
 
 router.get('/:nid', notesControllers.getNoteById);
 

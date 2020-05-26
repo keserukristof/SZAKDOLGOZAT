@@ -5,6 +5,11 @@ const appointmentsControllers = require("../controllers/appointments-controller"
 
 const router = express.Router();
 
+const checkAuth = require('../middlewares/CheckAuth');
+
+
+router.use(checkAuth);
+
 router.get('/:aid', appointmentsControllers.getAppointmentById);
 
 router.get("/user/:uid", appointmentsControllers.getAppointmentsByUserId);

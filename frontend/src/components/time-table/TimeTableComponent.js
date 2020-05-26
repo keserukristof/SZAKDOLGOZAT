@@ -66,7 +66,11 @@ class TimeTableComponent extends React.PureComponent {
     const userId = auth.userId;
     console.log(auth.userId);
     axios
-      .get(`http://localhost:5000/api/appointments/user/${userId}`)
+      .get(`http://localhost:5000/api/appointments/user/${userId}`, {
+        headers: {
+          Authorization: 'Bearer ' + auth.token,
+        },
+      })
       .then((res) => {
         const appointmentsData = res.data;
         this.setState({ data: appointmentsData.appointments }, () => {
@@ -101,7 +105,10 @@ class TimeTableComponent extends React.PureComponent {
         console.log(data[data.length - 1]);
         fetch('http://localhost:5000/api/appointments', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + auth.token,
+          },
           body: JSON.stringify(data[data.length - 1]),
         })
           .then((result) => {
@@ -128,7 +135,10 @@ class TimeTableComponent extends React.PureComponent {
           `http://localhost:5000/api/appointments/${appointmentToChange_id}`,
           {
             method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + auth.token,
+            },
             body: JSON.stringify(data[chanhedAppointmentId]),
           }
         )
@@ -149,6 +159,9 @@ class TimeTableComponent extends React.PureComponent {
           `http://localhost:5000/api/appointments/${appointmentToDelete_id}`,
           {
             method: 'DELETE',
+            headers: {
+              Authorization: 'Bearer ' + auth.token,
+            },
           }
         )
           .then((response) => console.log(response))

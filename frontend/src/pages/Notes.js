@@ -15,12 +15,18 @@ const Notes = () => {
 
   useEffect(() => {
     console.log(userId);
-    axios.get(`http://localhost:5000/api/notes/user/${userId}`).then((res) => {
-      const notesData = res.data;
-      console.log(notesData);
-      setNotes([...notesData.notes]);
-    });
-  }, [userId]);
+    axios
+      .get(`http://localhost:5000/api/notes/user/${userId}`, {
+        headers: {
+          Authorization: 'Bearer ' + auth.token,
+        },
+      })
+      .then((res) => {
+        const notesData = res.data;
+        console.log(notesData);
+        setNotes([...notesData.notes]);
+      });
+  }, [userId, auth.token]);
 
   const addNote = (note) => {
     console.log(notes);
@@ -30,6 +36,7 @@ const Notes = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + auth.token,
       },
       body: JSON.stringify({
         id: note.id,
@@ -57,11 +64,12 @@ const Notes = () => {
       })
     );
     noteToSend = { ...noteToSend, completed: !noteToSend.completed };
-    console.log(noteToSend)
+    console.log(noteToSend);
     fetch(`http://localhost:5000/api/notes/${noteToSend._id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + auth.token,
       },
       body: JSON.stringify({
         completed: noteToSend.completed,
@@ -70,11 +78,14 @@ const Notes = () => {
   };
 
   const removeNote = (id) => {
-    const noteToDelete = notes.find((note) => note.id === id)
-    console.log(noteToDelete)
+    const noteToDelete = notes.find((note) => note.id === id);
+    console.log(noteToDelete);
     setNotes(notes.filter((note) => note.id !== id));
     fetch(`http://localhost:5000/api/notes/${noteToDelete._id}`, {
       method: 'DELETE',
+      headers: {
+        Authorization: 'Bearer ' + auth.token,
+      },
     });
   };
 

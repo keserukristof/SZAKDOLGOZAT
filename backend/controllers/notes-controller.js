@@ -134,6 +134,7 @@ const updateNote = async (req, res, next) => {
     return next(error);
   }
 
+
   try {
     note.completed = await completed;
   } catch (err) {
