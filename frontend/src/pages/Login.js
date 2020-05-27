@@ -26,7 +26,7 @@ const Login = () => {
   const animation = useSpring({
     from: { marginLeft: -2300 },
     to: { marginLeft: 0 },
-    config: { duration: 1000 },
+    config: { duration: 600 },
   });
 
   const classes = useStyles();

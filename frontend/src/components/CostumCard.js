@@ -10,9 +10,9 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 
 const calc = (x, y) => [
-  -(y - window.innerHeight / 2) / 50,
+  -(y - window.innerHeight / 2) / 100,
   (x - window.innerWidth / 2) / 100,
-  1.1,
+  1.06,
 ];
 const trans = (x, y, s) =>
   `perspective(600px) rotateX(${x}deg) rotateY(${y}deg) scale(${s})`;
@@ -22,7 +22,11 @@ const useStyles = makeStyles({
     height: 240,
   },
   card: {
-    maxWidth: 700,
+    maxWidth: 750,
+    minWidth: 100,
+    marginBottom: 20,
+    background:
+      'linear-gradient(0deg, rgba(255,255,255,0.15887850467289721) 18%, rgba(63,81,181,1) 100%)',
   },
 });
 
@@ -31,7 +35,7 @@ const CostumCard = ({ image, hover, title, description }) => {
 
   const [cardStyle, set] = useSpring(() => ({
     xys: [0, 0, 1],
-    config: { mass: 3, tension: 250, friction: 30 },
+    config: { mass: 1, tension: 200, friction: 15 },
   }));
 
   return (

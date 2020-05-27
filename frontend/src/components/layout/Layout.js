@@ -14,11 +14,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import HomeIcon from '@material-ui/icons/Home';
@@ -28,6 +24,7 @@ import CodeIcon from '@material-ui/icons/Code';
 import PortraitIcon from '@material-ui/icons/Portrait';
 
 import ListItemLink from './ListItemLink';
+import LogoutButton from './LogoutButton'
 
 const drawerWidth = 225;
 
@@ -111,10 +108,7 @@ const ResponsiveDrawer = (props) => {
           />
         )}
         {auth.isLoggedIn && (
-          <ListItem button onClick={auth.logout}>
-            <ListItemIcon><ArrowBackIcon/></ListItemIcon>
-            <ListItemText primary="Log out"/>
-          </ListItem>
+          <LogoutButton/>
         )}
       </List>
     </div>

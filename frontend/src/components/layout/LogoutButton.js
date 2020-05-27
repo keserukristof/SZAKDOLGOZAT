@@ -1,13 +1,16 @@
-import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { useContext } from 'react';
 import ListItem from '@material-ui/core/ListItem';
+import { makeStyles } from '@material-ui/core/styles';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
-import PropTypes from 'prop-types';
+import { Link as RouterLink } from 'react-router-dom';
 
 import { useSpring, animated } from 'react-spring';
+
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+
+import { AuthContext } from '../../context/auth-contex';
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
@@ -15,21 +18,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ListItemLink = (props) => {
+const LogoutButton = () => {
   const classes = useStyles();
+  const auth = useContext(AuthContext);
 
   const [buttonStyle, set] = useSpring(() => ({
     backgroundColor: 'white',
   }));
 
-  const { icon, primary, to } = props;
-
   const renderLink = React.useMemo(
     () =>
       React.forwardRef((itemProps, ref) => (
-        <RouterLink to={to} ref={ref} {...itemProps} />
+        <RouterLink to={'/'} ref={ref} {...itemProps} />
       )),
-    [to]
+    []
   );
 
   return (
@@ -38,18 +40,19 @@ const ListItemLink = (props) => {
       onMouseLeave={() => set({ backgroundColor: 'white' })}
       style={{ backgroundColor: buttonStyle.backgroundColor }}
     >
-      <ListItem button className={classes.listItem} component={renderLink}>
-        <ListItemIcon>{icon}</ListItemIcon>
-        <ListItemText primary={primary} />
+      <ListItem
+        className={classes.listItem}
+        onClick={auth.logout}
+        component={renderLink}
+        button
+      >
+        <ListItemIcon>
+          <ArrowBackIcon />
+        </ListItemIcon>
+        <ListItemText primary={'Log out'} />
       </ListItem>
     </animated.div>
   );
 };
 
-ListItemLink.propTypes = {
-  icon: PropTypes.element,
-  primary: PropTypes.string.isRequired,
-  to: PropTypes.string.isRequired,
-};
-
-export default ListItemLink;
+export default LogoutButton;
