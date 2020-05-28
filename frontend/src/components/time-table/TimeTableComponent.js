@@ -117,9 +117,24 @@ class TimeTableComponent extends React.PureComponent {
           .catch((err) => {
             console.log(err);
           });
+        const userId = auth.userId;
+        console.log(auth.userId);
+        axios
+          .get(`http://localhost:5000/api/appointments/user/${userId}`, {
+            headers: {
+              Authorization: 'Bearer ' + auth.token,
+            },
+          })
+          .then((res) => {
+            const appointmentsData = res.data;
+            this.setState({ data: appointmentsData.appointments }, () => {
+              console.log('Appointments fetched', appointmentsData);
+            });
+          });
       }
       if (changed) {
         let chanhedAppointmentId;
+        console.log(changed);
         data = data.map((appointment) => {
           if (changed[appointment.id]) {
             chanhedAppointmentId = appointment.id;
@@ -129,7 +144,7 @@ class TimeTableComponent extends React.PureComponent {
         });
 
         const appointmentToChange = data[chanhedAppointmentId];
-        console.log(appointmentToChange._id);
+        console.log(appointmentToChange);
         const appointmentToChange_id = appointmentToChange._id;
         fetch(
           `http://localhost:5000/api/appointments/${appointmentToChange_id}`,

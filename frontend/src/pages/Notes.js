@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React from 'react';
 import axios from 'axios';
 
 import { AuthContext } from '../context/auth-contex';
@@ -8,13 +8,25 @@ import { Grid } from '@material-ui/core';
 import NoteForm from '../components/notes/NoteForm';
 import NoteList from '../components/notes/NoteList';
 
-const Notes = () => {
-  const [notes, setNotes] = useState([]);
-  const auth = useContext(AuthContext);
-  const userId = auth.userId;
+class Notes extends React.Component {
+  static contextType = AuthContext;
+  // const [notes, setNotes] = useState([]);
+  // const auth = useContext(AuthContext);
+  // const userId = auth.userId;
+  constructor(props) {
+    super(props);
+    this.state = {
+      notes: [],
+    };
 
-  useEffect(() => {
-    console.log(userId);
+    this.addNote = this.addNote.bind(this);
+    this.toggleComplete = this.toggleComplete.bind(this);
+    this.removeNote = this.removeNote.bind(this);
+  }
+
+  componentDidMount() {
+    const auth = this.context;
+    const userId = auth.userId;
     axios
       .get(`http://localhost:5000/api/notes/user/${userId}`, {
         headers: {
@@ -22,17 +34,17 @@ const Notes = () => {
         },
       })
       .then((res) => {
-        const notesData = res.data;
+        const notesData = res.data.notes;
         console.log(notesData);
-        setNotes([...notesData.notes]);
+        this.setState({ notes: notesData });
       });
-  }, [userId, auth.token]);
+  }
 
-  const addNote = (note) => {
-    console.log(notes);
-    setNotes([...notes, note]);
-
-    fetch('http://localhost:5000/api/notes', {
+  addNote = async (note) => {
+    const auth = this.context;
+    const userId = auth.userId;
+    console.log(note);
+    const updated = await fetch('http://localhost:5000/api/notes', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -45,14 +57,25 @@ const Notes = () => {
         creator: auth.userId,
       }),
     });
+    if (updated) {
+      axios
+        .get(`http://localhost:5000/api/notes/user/${userId}`, {
+          headers: {
+            Authorization: 'Bearer ' + auth.token,
+          },
+        })
+        .then((res) => {
+          this.setState({ notes: res.data.notes });
+        });
+    }
 
-    console.log(note);
+    console.log(this.state.notes);
   };
 
-  const toggleComplete = (id) => {
+  toggleComplete = (id) => {
     let noteToSend;
-    setNotes(
-      notes.map((note) => {
+    this.setState({
+      notes: this.state.notes.map((note) => {
         if (note.id === id) {
           noteToSend = note;
           return {
@@ -61,10 +84,13 @@ const Notes = () => {
           };
         }
         return note;
-      })
-    );
+      }),
+    });
     noteToSend = { ...noteToSend, completed: !noteToSend.completed };
+
     console.log(noteToSend);
+
+    const auth = this.context;
     fetch(`http://localhost:5000/api/notes/${noteToSend._id}`, {
       method: 'PATCH',
       headers: {
@@ -77,10 +103,11 @@ const Notes = () => {
     });
   };
 
-  const removeNote = (id) => {
-    const noteToDelete = notes.find((note) => note.id === id);
+  removeNote = (id) => {
+    const auth = this.context;
+    const noteToDelete = this.state.notes.find((note) => note.id === id);
     console.log(noteToDelete);
-    setNotes(notes.filter((note) => note.id !== id));
+    this.setState({ notes: this.state.notes.filter((note) => note.id !== id) });
     fetch(`http://localhost:5000/api/notes/${noteToDelete._id}`, {
       method: 'DELETE',
       headers: {
@@ -89,21 +116,23 @@ const Notes = () => {
     });
   };
 
-  return (
-    <div>
-      <Grid container justify="space-around">
-        <Grid item>
-          <h1>Add note!</h1>
+  render() {
+    return (
+      <div>
+        <Grid container justify="space-around">
+          <Grid item>
+            <h1>Add note!</h1>
+          </Grid>
         </Grid>
-      </Grid>
-      <NoteForm addNote={addNote} />
-      <NoteList
-        notes={notes}
-        toggleComplete={toggleComplete}
-        removeNote={removeNote}
-      />
-    </div>
-  );
-};
+        <NoteForm addNote={this.addNote} />
+        <NoteList
+          notes={this.state.notes}
+          toggleComplete={this.toggleComplete}
+          removeNote={this.removeNote}
+        />
+      </div>
+    );
+  }
+}
 
 export default Notes;

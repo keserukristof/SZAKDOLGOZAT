@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import uuid from 'react-uuid';
 import PropTypes from 'prop-types';
 
+
 import { makeStyles } from '@material-ui/core/styles';
 import { MuiThemeProvider, Grid } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
@@ -34,6 +35,7 @@ const NoteForm = ({ addNote }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
     if (note.task.trim()) {
       addNote({ ...note });
       setNote({ ...note, id: '', task: '' });

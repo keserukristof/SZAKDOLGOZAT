@@ -128,7 +128,7 @@ const updateNote = async (req, res, next) => {
     note = await Note.findById(noteId);
   } catch (err) {
     const error = new HttpError(
-      'Something went wrong, could not update note.',
+      'Something went wrong, could not update note because of _id',
       500
     );
     return next(error);
