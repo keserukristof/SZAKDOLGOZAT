@@ -103,6 +103,7 @@ class TimeTableComponent extends React.PureComponent {
           { ...added, creator: auth.userId, id: startingAddedId },
         ];
         console.log(data[data.length - 1]);
+        const userId = auth.userId;
         fetch('http://localhost:5000/api/appointments', {
           method: 'POST',
           headers: {
@@ -116,56 +117,52 @@ class TimeTableComponent extends React.PureComponent {
           })
           .catch((err) => {
             console.log(err);
-          });
-        const userId = auth.userId;
-        console.log(auth.userId);
-        axios
-          .get(`http://localhost:5000/api/appointments/user/${userId}`, {
-            headers: {
-              Authorization: 'Bearer ' + auth.token,
-            },
           })
-          .then((res) => {
-            const appointmentsData = res.data;
-            this.setState({ data: appointmentsData.appointments }, () => {
-              console.log('Appointments fetched', appointmentsData);
-            });
+          .then(() => {
+            axios
+              .get(`http://localhost:5000/api/appointments/user/${userId}`, {
+                headers: {
+                  Authorization: 'Bearer ' + auth.token,
+                },
+              })
+              .then((res) => {
+                const appointmentsData = res.data;
+                this.setState({ data: appointmentsData.appointments }, () => {
+                  console.log('Appointments fetched', appointmentsData);
+                });
+              });
           });
       }
       if (changed) {
-        let chanhedAppointmentId;
-        console.log(changed);
-        data = data.map((appointment) => {
-          if (changed[appointment.id]) {
-            chanhedAppointmentId = appointment.id;
-            return { ...appointment, ...changed[appointment.id] };
-          }
-          return appointment;
-        });
-
-        const appointmentToChange = data[chanhedAppointmentId];
-        console.log(appointmentToChange);
-        const appointmentToChange_id = appointmentToChange._id;
+        const changedId = Object.keys(changed)[0];
+        console.log(data.find(appointment => appointment.id.toString() === changedId))
+        const appointmentsToChange = data.find(appointment => appointment.id.toString() === changedId)
+        let changed_id = appointmentsToChange._id
+        data = data.map(appointment => (
+          changed[appointment.id] ? { ...appointment, ...changed[appointment.id] } : appointment));
         fetch(
-          `http://localhost:5000/api/appointments/${appointmentToChange_id}`,
+          `http://localhost:5000/api/appointments/${changed_id}`,
           {
             method: 'PATCH',
             headers: {
               'Content-Type': 'application/json',
               Authorization: 'Bearer ' + auth.token,
             },
-            body: JSON.stringify(data[chanhedAppointmentId]),
+            body: JSON.stringify(data[changedId]),
           }
         )
           .then((result) => {
             console.log(result);
+            console.log(JSON.stringify(data[changedId]))
           })
           .catch((err) => {
             console.log(err);
-          });
+          })
       }
       if (deleted !== undefined) {
+        console.log(deleted);
         const appointmentToDelete = data[deleted];
+        console.log(appointmentToDelete)
         const appointmentToDelete_id = appointmentToDelete._id;
         data = data.filter((appointment) => {
           return appointment.id !== deleted;
@@ -181,6 +178,7 @@ class TimeTableComponent extends React.PureComponent {
         )
           .then((response) => console.log(response))
           .catch((err) => console.log(err));
+        
       }
       return { data };
     });

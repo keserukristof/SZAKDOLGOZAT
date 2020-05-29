@@ -206,11 +206,17 @@ const deleteAppointment = async (req, res, next) => {
 
   try {
     const sess = await mongoose.startSession();
+    console.log("Session started")
     sess.startTransaction();
+    console.log("Transaction started")
     await appointment.remove({ session: sess });
+    console.log("Appointment removed")
     appointment.creator.appointments.pull(appointment);
+    console.log("Appointment removed from creator")
     await appointment.creator.save({ session: sess });
+    console.log("Creator updeted after remove")
     await sess.commitTransaction();
+    console.log("Transaction commited")
   } catch (err) {
     const error = new HttpError(
       "Something went wrong, could not delete appointment.",
