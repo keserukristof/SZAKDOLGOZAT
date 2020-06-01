@@ -73,6 +73,7 @@ class TimeTableComponent extends React.PureComponent {
       })
       .then((res) => {
         const appointmentsData = res.data;
+        console.log(appointmentsData)
         this.setState({ data: appointmentsData.appointments }, () => {
           console.log('Appointments fetched', appointmentsData);
         });
@@ -134,10 +135,11 @@ class TimeTableComponent extends React.PureComponent {
           });
       }
       if (changed) {
+        console.log(changed)
         const changedId = Object.keys(changed)[0];
-        console.log(data.find(appointment => appointment.id.toString() === changedId))
-        const appointmentsToChange = data.find(appointment => appointment.id.toString() === changedId)
-        let changed_id = appointmentsToChange._id
+        const appointmentToChange = data.find(appointment => appointment.id.toString() === changedId)
+        const changedAppointment = ({ ...appointmentToChange, ...changed[appointmentToChange.id]})
+        let changed_id = appointmentToChange._id
         data = data.map(appointment => (
           changed[appointment.id] ? { ...appointment, ...changed[appointment.id] } : appointment));
         fetch(
@@ -148,12 +150,11 @@ class TimeTableComponent extends React.PureComponent {
               'Content-Type': 'application/json',
               Authorization: 'Bearer ' + auth.token,
             },
-            body: JSON.stringify(data[changedId]),
+            body: JSON.stringify(changedAppointment),
           }
         )
           .then((result) => {
             console.log(result);
-            console.log(JSON.stringify(data[changedId]))
           })
           .catch((err) => {
             console.log(err);
@@ -161,8 +162,9 @@ class TimeTableComponent extends React.PureComponent {
       }
       if (deleted !== undefined) {
         console.log(deleted);
-        const appointmentToDelete = data[deleted];
-        console.log(appointmentToDelete)
+        const appointmentToDelete = data.find((appointment) => {
+          return appointment.id === deleted
+        });
         const appointmentToDelete_id = appointmentToDelete._id;
         data = data.filter((appointment) => {
           return appointment.id !== deleted;
